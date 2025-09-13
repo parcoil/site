@@ -44,9 +44,9 @@ export default function TextCaseConverter() {
           .join(" ");
         break;
       case "sentencecase":
-        result = inputText.toLowerCase().replace(/(^\s*\w|[.!?]\s*\w)/g, (c) =>
-          c.toUpperCase()
-        );
+        result = inputText
+          .toLowerCase()
+          .replace(/(^\s*\w|[.!?]\s*\w)/g, (c) => c.toUpperCase());
         break;
       case "camelcase":
         result = inputText
@@ -163,7 +163,9 @@ export default function TextCaseConverter() {
             {conversionButtons.map((button) => (
               <Button
                 key={button.value}
-                variant={lastConversion === button.value ? "default" : "outline"}
+                variant={
+                  lastConversion === button.value ? "default" : "outline"
+                }
                 size="sm"
                 onClick={() => convertCase(button.value)}
                 className="text-xs sm:text-sm"
@@ -209,7 +211,7 @@ export default function TextCaseConverter() {
             </div>
           )}
 
-          <div className="text-sm text-gray-500 space-y-2">
+          <div className="text-sm text-muted-foreground space-y-2">
             <h3 className="font-medium">Tips:</h3>
             <ul className="list-disc pl-5 text-xs space-y-1">
               <li>Use Title Case for headings and titles</li>

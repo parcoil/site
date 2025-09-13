@@ -15,6 +15,7 @@ import {
   Gamepad2,
   Sparkles,
   ExternalLink,
+  Crosshair,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -37,12 +38,23 @@ function page() {
       name: "Sparkle",
       description:
         "A powerful Windows Optimization App that helps Debloat Windows and improve system performance. open-source and regularly updated.",
-      repo: "https://github.com/Parcoil/Sparkle",
+      repo: "https://github.com/parcoil/Sparkle",
       download: "https://getsparkle.net",
       site: "https://getsparkle.net",
       icon: <Sparkles size={24} />,
       category: "software",
       tags: ["Windows", "Optimization"],
+      featured: true,
+    },
+    {
+      name: "Dotline",
+      description: "A modern crosshair overlay app for Windows/Linux",
+      repo: "https://github.com/parcoil/dotline",
+      download: "/dotline",
+      site: "/dotline",
+      icon: <Crosshair size={24} />,
+      category: "software",
+      tags: ["Windows", "Overlay", "Linux"],
       featured: true,
     },
     {

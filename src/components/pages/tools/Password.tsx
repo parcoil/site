@@ -210,7 +210,7 @@ export default function PasswordGenerator() {
           </div>
         </div>
 
-        <div className="p-4 bg-gray-50 dark:bg-secondary rounded-md">
+        <div className="p-4 bg-gray-50 dark:bg-background/70 rounded-md">
           <div className="flex justify-between items-center mb-2">
             <Label className="flex items-center">
               <Shield className="h-4 w-4 mr-2" />
@@ -262,7 +262,7 @@ export default function PasswordGenerator() {
           )}
         </div>
 
-        <div className="text-sm text-gray-500 space-y-2">
+        <div className="text-sm text-muted-foreground space-y-2">
           <h2 className="font-medium">Password Tips:</h2>
           <ul className="list-disc pl-5 text-xs space-y-1">
             <li>Use a different password for each account</li>

@@ -29,7 +29,7 @@ export default function Base64EncoderDecoderPage() {
         <h1 className="text-3xl md:text-4xl font-bold mb-3">
           Base64 Encoder/Decoder
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
           Easily convert your text to Base64 encoding or decode Base64 back to
           plain text. Simple, fast, and secure - all processing happens in your
           browser.
