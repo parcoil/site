@@ -10,15 +10,14 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Parcoil",
-  description:
-    "Creators of Lunaar and Starlight unblocked games, and Sparkle Windows optimizer. ",
+  description: "Creators of Lunaar and Sparkle Windows optimizer. ",
   keywords:
     "Parcoil, Lunaar, Starlight, Sparkle, Windows optimizer, unblocked games, open source, optimizer, windows tweaks, windows tweaker, vtrl, hone",
   robots: "index, follow",
 };
 const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 export default function RootLayout({ children }) {
   return (
@@ -32,7 +31,9 @@ export default function RootLayout({ children }) {
           crossOrigin="anonymous"
         ></Script>
       </head>
-      <body className={`${poppins.className} antialiased`}>
+      <body
+        className={`${poppins.className} antialiased min-h-screen flex flex-col overflow-x-hidden`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -41,7 +42,7 @@ export default function RootLayout({ children }) {
         >
           <Toaster richColors />
           <Navbar />
-          {children}
+          <main className="flex-grow flex flex-col">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

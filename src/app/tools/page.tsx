@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardFooter,
 } from "@/components/ui/card";
@@ -17,6 +16,12 @@ import {
   Type,
   Search,
   ArrowRight,
+  LinkIcon,
+  Code,
+  Shield,
+  Calculator,
+  FileText,
+  Key,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -92,6 +97,53 @@ function page() {
       category: "text",
       tag: "Text",
     },
+    {
+      name: "URL Encoder/Decoder",
+      description:
+        "Encode and decode URLs for safe transmission over the internet",
+      link: "/tools/url-encoder",
+      icon: <LinkIcon size={28} />,
+      category: "encoding",
+      tag: "Web",
+    },
+    {
+      name: "JSON Formatter",
+      description:
+        "Format, validate, and minify JSON data for better readability",
+      link: "/tools/json-formatter",
+      icon: <Code size={28} />,
+      category: "text",
+      tag: "Data",
+      popular: true,
+    },
+    {
+      name: "Unit Converter",
+      description:
+        "Convert between different units of length, weight, and temperature",
+      link: "/tools/unit-converter",
+      icon: <Calculator size={28} />,
+      category: "converter",
+      tag: "Math",
+      popular: true,
+    },
+    {
+      name: "Word Counter",
+      description:
+        "Count words, characters, and lines in your text with real-time updates",
+      link: "/tools/word-counter",
+      icon: <FileText size={28} />,
+      category: "text",
+      tag: "Text",
+    },
+    {
+      name: "UUID Generator",
+      description:
+        "Generate random UUIDs for unique identifiers in your applications",
+      link: "/tools/uuid-generator",
+      icon: <Key size={28} />,
+      category: "generator",
+      tag: "ID",
+    },
   ];
 
   const categories = [
@@ -102,6 +154,8 @@ function page() {
     { id: "security", name: "Security" },
     { id: "design", name: "Design" },
     { id: "network", name: "Network" },
+    { id: "converter", name: "Converters" },
+    { id: "generator", name: "Generators" },
   ];
 
   return (

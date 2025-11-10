@@ -29,8 +29,8 @@ function Page() {
             <div className="relative">
               <Image
                 src="/parcoil.png"
-                width={120}
-                height={120}
+                width={150}
+                height={150}
                 alt="Parcoil Logo"
                 className="transition-transform hover:scale-105 duration-300"
               />
@@ -52,7 +52,10 @@ function Page() {
           </div> */}
 
           <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto leading-relaxed">
-            We build open source tools/projects.
+            We build tools/projects like{" "}
+            <a href="https://getsparkle.net" className="text-primary underline">
+              Sparkle
+            </a>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
@@ -117,20 +120,6 @@ function Page() {
             <Card className="hover:shadow-lg transition-shadow duration-300">
               <CardHeader>
                 <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4">
-                  <Star className="text-primary-foreground" />
-                </div>
-                <CardTitle>Starlight</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  React based unblocked games/proxy site with fast performance.
-                </CardDescription>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-shadow duration-300">
-              <CardHeader>
-                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4">
                   <Crosshair className="text-primary-foreground" />
                 </div>
                 <CardTitle>Dotline</CardTitle>
@@ -138,6 +127,19 @@ function Page() {
               <CardContent>
                 <CardDescription className="text-base">
                   A Modern Crosshair Overlay for Windows/Linux
+                </CardDescription>
+              </CardContent>
+            </Card>
+            <Card className="hover:shadow-lg transition-shadow duration-300">
+              <CardHeader>
+                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4">
+                  <Star className="text-primary-foreground" />
+                </div>
+                <CardTitle>Starlight</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className="text-base">
+                  React based unblocked games/proxy site with fast performance.
                 </CardDescription>
               </CardContent>
             </Card>
@@ -159,15 +161,15 @@ function Page() {
 
             <Card className="border-0 shadow-none">
               <CardContent className="pt-6">
-                <div className="text-4xl font-bold text-primary mb-2">20K+</div>
+                <div className="text-4xl font-bold text-primary mb-2">60K+</div>
                 <div className="text-muted-foreground">Sparkle Downloads</div>
               </CardContent>
             </Card>
 
             <Card className="border-0 shadow-none">
               <CardContent className="pt-6">
-                <div className="text-4xl font-bold text-primary mb-2">100%</div>
-                <div className="text-muted-foreground">Open Source</div>
+                <div className="text-4xl font-bold text-primary mb-2">13</div>
+                <div className="text-muted-foreground">Free Tools</div>
               </CardContent>
             </Card>
           </div>
