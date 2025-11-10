@@ -3,12 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import dynamic from "next/dynamic";
-
-const AdBanner = dynamic(() => import("@/components/AdBanner"), {
-  ssr: false,
-  loading: () => <div className="h-24 bg-muted/20 rounded-lg animate-pulse" />
-});
+import AdBanner from "@/components/AdBanner";
 import {
   Card,
   CardContent,

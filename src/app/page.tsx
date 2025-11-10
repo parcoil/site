@@ -12,11 +12,7 @@ import Image from "next/image";
 import Sparklecta from "@/components/Sparklecta";
 import { Metadata } from "next";
 import { Crosshair, Moon, Sparkle, Star } from "lucide-react";
-import dynamic from "next/dynamic";
-
-const AdBanner = dynamic(() => import("@/components/AdBanner"), {
-  loading: () => <div className="h-24 bg-muted/20 rounded-lg animate-pulse" />
-});
+import AdBanner from "@/components/AdBanner";
 
 export const metadata: Metadata = {
   title: "Home | Parcoil",

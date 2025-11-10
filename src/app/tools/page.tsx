@@ -17,7 +17,7 @@ import {
   Type,
   Search,
   ArrowRight,
-  Link,
+  LinkIcon,
   Code,
   Shield,
   Calculator,
@@ -26,11 +26,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import dynamic from "next/dynamic";
-
-const AdBanner = dynamic(() => import("@/components/AdBanner"), {
-  loading: () => <div className="h-24 bg-muted/20 rounded-lg animate-pulse" />
-});
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "Tools | Parcoil",
@@ -252,13 +248,13 @@ function page() {
                 )}
             </TabsContent>
           ))}
-         </Tabs>
+        </Tabs>
 
-         <div className="mt-12 w-full">
-           <AdBanner />
-         </div>
-       </div>
-     </div>
+        <div className="mt-12 w-full">
+          <AdBanner />
+        </div>
+      </div>
+    </div>
   );
 }
 

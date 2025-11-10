@@ -4,12 +4,7 @@ import {
   Github,
   Twitter,
 } from "lucide-react";
-import dynamic from "next/dynamic";
-
-const AdBanner = dynamic(() => import("@/components/AdBanner"), {
-  ssr: false,
-  loading: () => <div className="h-24 bg-muted/20 rounded-lg animate-pulse" />
-});
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "Contact | Parcoil",
