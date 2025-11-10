@@ -1,4 +1,10 @@
 import Base from "@/components/pages/tools/Base";
+import dynamic from "next/dynamic";
+
+const AdBanner = dynamic(() => import("@/components/AdBanner"), {
+  ssr: false,
+  loading: () => <div className="h-24 bg-muted/20 rounded-lg animate-pulse" />
+});
 
 export const metadata = {
   title: "Base64 Encoder/Decoder Tool | Convert Text to Base64 and Back",
@@ -56,8 +62,14 @@ export default function Base64EncoderDecoderPage() {
           <li>Encoding email attachments (MIME)</li>
           <li>Storing complex data in XML or JSON</li>
           <li>Transferring data over protocols that may corrupt binary data</li>
-        </ul>
-      </section>
-    </main>
+         </ul>
+       </section>
+
+       <section className="py-8 px-4">
+         <div className="max-w-4xl mx-auto">
+           <AdBanner />
+         </div>
+       </section>
+     </main>
   );
 }

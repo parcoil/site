@@ -18,6 +18,12 @@ import {
   Crosshair,
 } from "lucide-react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const AdBanner = dynamic(() => import("@/components/AdBanner"), {
+  ssr: false,
+  loading: () => <div className="h-24 bg-muted/20 rounded-lg animate-pulse" />
+});
 
 export const metadata = {
   title: "Projects | Parcoil",
@@ -304,9 +310,13 @@ function page() {
               />
             </Button>
           </Link>
-        </div>
-      </div>
-    </div>
+         </div>
+
+         <div className="max-w-6xl mx-auto px-4 py-8">
+           <AdBanner />
+         </div>
+       </div>
+     </div>
   );
 }
 

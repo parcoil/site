@@ -1,5 +1,11 @@
 import PasswordGenerator from "@/components/pages/tools/Password";
 import React from "react";
+import dynamic from "next/dynamic";
+
+const AdBanner = dynamic(() => import("@/components/AdBanner"), {
+  ssr: false,
+  loading: () => <div className="h-24 bg-muted/20 rounded-lg animate-pulse" />
+});
 
 export const metadata = {
   title: "Secure Password Generator | Free Online Tool | Parcoil",
@@ -73,8 +79,14 @@ export default function PasswordGeneratorPage() {
             <li>Copy your generated password with one click</li>
             <li>Use a different password for each of your accounts</li>
           </ol>
-        </div>
-      </section>
-    </div>
+         </div>
+       </section>
+
+       <section className="py-8 px-4">
+         <div className="max-w-4xl mx-auto">
+           <AdBanner />
+         </div>
+       </section>
+     </div>
   );
 }

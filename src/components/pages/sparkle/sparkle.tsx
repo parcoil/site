@@ -3,6 +3,12 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import dynamic from "next/dynamic";
+
+const AdBanner = dynamic(() => import("@/components/AdBanner"), {
+  ssr: false,
+  loading: () => <div className="h-24 bg-muted/20 rounded-lg animate-pulse" />
+});
 import {
   Card,
   CardContent,
@@ -474,8 +480,12 @@ export default function SparkleClient() {
           >
             GitHub
           </a>
-        </p>
-      </div>
-    </div>
+         </p>
+
+         <div className="max-w-4xl mx-auto px-4 py-8">
+           <AdBanner />
+         </div>
+       </div>
+     </div>
   );
 }

@@ -12,6 +12,11 @@ import Image from "next/image";
 import Sparklecta from "@/components/Sparklecta";
 import { Metadata } from "next";
 import { Crosshair, Moon, Sparkle, Star } from "lucide-react";
+import dynamic from "next/dynamic";
+
+const AdBanner = dynamic(() => import("@/components/AdBanner"), {
+  loading: () => <div className="h-24 bg-muted/20 rounded-lg animate-pulse" />
+});
 
 export const metadata: Metadata = {
   title: "Home | Parcoil",
@@ -173,10 +178,16 @@ function Page() {
               </CardContent>
             </Card>
           </div>
-        </div>
-      </section>
+         </div>
+       </section>
 
-      <section className="py-16 px-4 bg-primary text-primary-foreground">
+       <section className="py-8 px-4">
+         <div className="max-w-4xl mx-auto">
+           <AdBanner />
+         </div>
+       </section>
+
+       <section className="py-16 px-4 bg-primary text-primary-foreground">
         <div className="max-w-4xl mx-auto text-center">
           {/* dont know what else to say */}
           <h2 className="text-4xl font-bold mb-6">Ready to Take Control?</h2>

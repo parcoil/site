@@ -1,4 +1,13 @@
-import HashGenerator from "@/components/pages/tools/HashGenerator";
+import dynamic from "next/dynamic";
+
+const HashGenerator = dynamic(() => import("@/components/pages/tools/HashGenerator"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center p-8">
+      <div className="text-muted-foreground">Loading hash generator...</div>
+    </div>
+  ),
+});
 
 export const metadata = {
   title: "Hash Generator Tool | Generate MD5, SHA-1, SHA-256, SHA-384, SHA-512 Hashes",
