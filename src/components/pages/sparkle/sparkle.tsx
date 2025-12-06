@@ -408,9 +408,9 @@ export default function SparkleClient() {
                 the following PowerShell command:
               </p>
 
-              <div className="group relative mt-2 flex w-full max-w-xl">
+              <div className="group relative mt-2 flex w-full max-w-xl justify-center">
                 <button
-                  className="flex w-full items-center justify-between gap-3 rounded-md border border-primary bg-background px-3 py-2 font-mono text-sm text-foreground shadow-sm transition-colors hover:bg-muted/40 dark:border-accent"
+                  className="flex w-fit items-center justify-between gap-3 rounded-md border border-primary bg-background px-3 py-2 font-mono text-sm text-foreground shadow-sm transition-colors hover:bg-muted/40 dark:border-accent"
                   onClick={() => {
                     navigator.clipboard.writeText(
                       "irm https://getsparkle.net/debloatscript | iex"
@@ -419,7 +419,11 @@ export default function SparkleClient() {
                   }}
                   aria-label="Copy command"
                 >
-                  <span>irm https://getsparkle.net/debloatscript | iex</span>
+                  <pre>
+                    irm
+                    https://raw.githubusercontent.com/parcoil/sparkle/v2/tweaks/debloat-windows/apply.ps1
+                    | iex
+                  </pre>
                   <Copy className="h-4 w-4 opacity-80" />
                 </button>
                 <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">
