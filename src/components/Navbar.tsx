@@ -130,7 +130,7 @@ function Navbar() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Button variant="ghost" asChild>
-                    <a href="https://getsparkle.net">Sparkle</a>
+                    <a href="/sparkle">Sparkle</a>
                   </Button>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
@@ -254,7 +254,7 @@ function Navbar() {
             </div>
 
             <Button variant="ghost" className="w-full justify-start" asChild>
-              <a href="https://getsparkle.net">Sparkle</a>
+              <a href="/sparkle">Sparkle</a>
             </Button>
             <Button variant="ghost" className="w-full justify-start" asChild>
               <a href="/dotline">

@@ -40,8 +40,8 @@ function page() {
       description:
         "A powerful Windows Optimization App that helps Debloat Windows and improve system performance. open-source and regularly updated.",
       repo: "https://github.com/parcoil/Sparkle",
-      download: "https://getsparkle.net",
-      site: "https://getsparkle.net",
+      download: "/sparkle",
+      site: "/sparkle",
       icon: <Sparkles size={24} />,
       category: "software",
       tags: ["Windows", "Optimization"],
@@ -305,13 +305,13 @@ function page() {
               />
             </Button>
           </Link>
-         </div>
+        </div>
 
-         <div className="max-w-6xl mx-auto px-4 py-8">
-           <AdBanner />
-         </div>
-       </div>
-     </div>
+        <div className="max-w-6xl mx-auto px-4 py-8">
+          <AdBanner />
+        </div>
+      </div>
+    </div>
   );
 }
 

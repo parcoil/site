@@ -54,9 +54,9 @@ function Page() {
 
           <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto leading-relaxed">
             We build tools/projects like{" "}
-            <a href="https://getsparkle.net" className="text-primary underline">
+            <Link href="/sparkle" className="text-primary underline">
               Sparkle
-            </a>
+            </Link>
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
@@ -174,16 +174,16 @@ function Page() {
               </CardContent>
             </Card>
           </div>
-         </div>
-       </section>
+        </div>
+      </section>
 
-       <section className="py-8 px-4">
-         <div className="max-w-4xl mx-auto">
-           <AdBanner />
-         </div>
-       </section>
+      <section className="py-8 px-4">
+        <div className="max-w-4xl mx-auto">
+          <AdBanner />
+        </div>
+      </section>
 
-       <section className="py-16 px-4 bg-primary text-primary-foreground">
+      <section className="py-16 px-4 bg-primary text-primary-foreground">
         <div className="max-w-4xl mx-auto text-center">
           {/* dont know what else to say */}
           <h2 className="text-4xl font-bold mb-6">Ready to Take Control?</h2>

@@ -34,7 +34,7 @@ function Sparklecta() {
   return (
     <div>
       <div className="mb-4">
-        <Link href={showDotline ? "/dotline" : "https://getsparkle.net"}>
+        <Link href={showDotline ? "/dotline" : "/sparkle"}>
           <Badge
             variant="outline"
             className="text-lg px-4 py-2 font-semibold rounded-full hover:bg-primary hover:text-primary-foreground transition-colors gap-2 cursor-pointer"
