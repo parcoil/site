@@ -200,7 +200,7 @@ export default function SparkleClient() {
         crossOrigin="anonymous"
       />
       <div className="min-h-screen">
-        <ReactLenis root />
+        {/* <ReactLenis root /> */}
         <div className="container mx-auto px-4 py-12 max-w-6xl">
           <div className="text-center">
             <div className="flex justify-center mb-4 animate-bounce-slow">

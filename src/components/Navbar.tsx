@@ -23,6 +23,7 @@ import { File } from "lucide-react";
 import { Globe } from "lucide-react";
 import Image from "next/image";
 import { Badge } from "./ui/badge";
+import Logo from "./logo";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -36,7 +37,8 @@ function Navbar() {
               className="text-2xl font-bold hover:text-primary flex text-center items-center gap-2 transition-all"
               href={"/"}
             >
-              <Image src="/parcoil.png" alt="Parcoil" width="50" height="50" />
+              {/* <Image src="/parcoil.png" alt="Parcoil" width="50" height="50" /> */}
+              <Logo className="w-[50px] h-[50px] text-primary" />
               Parcoil
             </Link>
           </div>
