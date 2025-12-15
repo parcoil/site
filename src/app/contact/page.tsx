@@ -1,9 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Mail,
-  Github,
-  Twitter,
-} from "lucide-react";
+import { Mail, Github, Twitter } from "lucide-react";
 import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
@@ -26,7 +22,7 @@ export default function ContactPage() {
           </p>
         </div>
 
-        <div className="flex items-center justify-center mx-auto">
+        <div className="flex items-center justify-center mx-auto gap-8 flex-col">
           {/* Contact Form */}
           {/* <Card>
             <CardHeader>
@@ -87,7 +83,6 @@ export default function ContactPage() {
             </CardContent>
           </Card> */}
 
-          {/* Contact Information */}
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -98,7 +93,12 @@ export default function ContactPage() {
                   <Mail className="h-5 w-5 text-primary" />
                   <div>
                     <p className="font-medium">Email</p>
-                    <p className="text-muted-foreground">hello@parcoil.com</p>
+                    <a
+                      className="text-primary"
+                      href="mailto:info@parcoil.com?subject=Hello!"
+                    >
+                      info@parcoil.com
+                    </a>
                   </div>
                 </div>
 
@@ -181,13 +181,13 @@ export default function ContactPage() {
                 </p>
               </CardContent>
             </Card>
-         </div>
+          </div>
 
-         <div className="max-w-4xl mx-auto px-4 py-8">
-           <AdBanner />
-         </div>
-       </div>
-     </div>
+          <div className="max-w-4xl mx-auto px-4 py-8">
+            <AdBanner />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

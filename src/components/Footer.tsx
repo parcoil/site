@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function Footer() {
   const year = new Date().getFullYear();
 
@@ -8,7 +10,15 @@ function Footer() {
           a parcoil site.{" "}
           <a href="mailto:info@parcoil.com" className="text-primary">
             info@parcoil.com
-          </a>
+          </a>{" "}
+          |{" "}
+          <Link href="/privacy" className="text-primary hover:underline">
+            Privacy Policy
+          </Link>{" "}
+          |{" "}
+          <Link href="/contact" className="text-primary hover:underline">
+            Contact
+          </Link>
         </p>
       </div>
     </footer>
