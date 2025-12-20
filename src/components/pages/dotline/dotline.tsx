@@ -76,6 +76,32 @@ async function getLatestRelease() {
   }
 }
 
+async function getTotalDownloads() {
+  try {
+    const res = await fetch(
+      "https://api.github.com/repos/parcoil/dotline/releases"
+    );
+    if (!res.ok) throw new Error("Failed to fetch releases");
+    const releases = await res.json();
+
+    let totalDownloads = 0;
+    releases.forEach((release) => {
+      const version = release.tag_name;
+      if (version) {
+        release.assets.forEach((asset) => {
+          if (asset.name.endsWith(".exe") || asset.name.endsWith(".AppImage") || asset.name.endsWith(".deb") || asset.name.endsWith(".zip")) {
+            totalDownloads += asset.download_count || 0;
+          }
+        });
+      }
+    });
+
+    return totalDownloads;
+  } catch {
+    return null;
+  }
+}
+
 export default function DotlineClient() {
   const [version, setVersion] = useState(null);
   const [downloads, setDownloads] = useState<Download>({
@@ -92,6 +118,7 @@ export default function DotlineClient() {
     debName: null,
   });
   const [loading, setLoading] = useState(true);
+  const [totalDownloads, setTotalDownloads] = useState(null);
 
   type Download = {
     version: string;
@@ -141,6 +168,10 @@ export default function DotlineClient() {
       setVersion(data.version);
       setDownloads(data);
       setLoading(false);
+    });
+
+    getTotalDownloads().then((total) => {
+      setTotalDownloads(total);
     });
   }, []);
 
@@ -195,6 +226,14 @@ export default function DotlineClient() {
                   >
                     <strong className="text-primary">{version}</strong>
                   </a>
+                </p>
+              )}
+              {totalDownloads && (
+                <p className="text-sm text-muted-foreground">
+                  Total Downloads:{" "}
+                  <strong className="text-primary">
+                    {totalDownloads.toLocaleString()}
+                  </strong>
                 </p>
               )}
             </div>
