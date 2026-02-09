@@ -16,15 +16,15 @@ const nextConfig = {
       },
     ];
   },
-  //   async redirects() {
-  //   return [
-  //     {
-  //       source: '/sparkle',
-  //       destination: 'https://getsparkle.net?ref=parcoil-sparkle-page',
-  //       permanent: true,
-  //     },
-  //   ]
-  // },
+  async redirects() {
+    return [
+      {
+        source: "/sparkle",
+        destination: "https://sparkle.parcoil.com",
+        permanent: false,
+      },
+    ];
+  },
   // This is required to support PostHog trailing slash API requests
   skipTrailingSlashRedirect: true,
 };
