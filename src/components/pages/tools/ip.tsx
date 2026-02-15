@@ -15,7 +15,7 @@ export default function IPInfoCard() {
   useEffect(() => {
     async function getIp() {
       try {
-        const res = await fetch("https://ipwho.is/");
+        const res = await fetch("https://ipapi.co/json/");
         const data = await res.json();
         setIpinfo(data);
       } catch (error) {
@@ -47,16 +47,15 @@ export default function IPInfoCard() {
       <Card className="w-full max-w-2xl shadow-xl">
         <CardContent className="flex flex-col items-center space-y-6 p-6 text-center">
           <div className="flex items-center space-x-4">
-            {ipinfo?.flag?.img && (
-              <Image
-                src={ipinfo.flag.img}
-                alt={ipinfo?.country}
+            {ipinfo?.country_code && (
+              <img
+                src={`https://flagcdn.com/48x36/${ipinfo.country_code.toLowerCase()}.png`}
+                alt={ipinfo?.country_name}
                 width={40}
-                height={40}
-                className="rounded-sm"
+                height={30}
               />
             )}
-            <h2 className="text-2xl font-semibold">{ipinfo?.country}</h2>
+            <h2 className="text-2xl font-semibold">{ipinfo?.country_name}</h2>
           </div>
 
           <div className="flex items-center space-x-2 text-4xl font-bold text-primary">
@@ -82,19 +81,19 @@ export default function IPInfoCard() {
               <strong>Postal Code:</strong> {ipinfo?.postal}
             </p>
             <p>
-              <strong>Capital:</strong> {ipinfo?.capital}
+              <strong>Capital:</strong> {ipinfo?.country_capital}
             </p>
             <p>
-              <strong>Borders:</strong> {ipinfo?.borders || "N/A"}
+              <strong>Continent:</strong> {ipinfo?.continent_code || "N/A"}
             </p>
             <p>
-              <strong>ISP:</strong> {ipinfo?.connection?.isp}
+              <strong>ISP:</strong> {ipinfo?.org}
             </p>
             <p>
-              <strong>Timezone:</strong> {ipinfo?.timezone?.abbr}
+              <strong>Timezone:</strong> {ipinfo?.timezone}
             </p>
             <p>
-              <strong>Timezone ID:</strong> {ipinfo?.timezone?.id}
+              <strong>Currency:</strong> {ipinfo?.currency}
             </p>
           </div>
         </CardContent>
