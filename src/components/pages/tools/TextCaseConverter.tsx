@@ -82,7 +82,7 @@ export default function TextCaseConverter() {
         result = inputText
           .split("")
           .map((char, index) =>
-            index % 2 === 0 ? char.toLowerCase() : char.toUpperCase()
+            index % 2 === 0 ? char.toLowerCase() : char.toUpperCase(),
           )
           .join("");
         break;
@@ -92,7 +92,7 @@ export default function TextCaseConverter() {
           .map((char) =>
             char === char.toUpperCase()
               ? char.toLowerCase()
-              : char.toUpperCase()
+              : char.toUpperCase(),
           )
           .join("");
         break;
@@ -164,7 +164,7 @@ export default function TextCaseConverter() {
               <Button
                 key={button.value}
                 variant={
-                  lastConversion === button.value ? "default" : "outline-solid"
+                  lastConversion === button.value ? "default" : "outline"
                 }
                 size="sm"
                 onClick={() => convertCase(button.value)}
