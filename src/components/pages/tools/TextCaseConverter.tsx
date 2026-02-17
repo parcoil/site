@@ -164,7 +164,7 @@ export default function TextCaseConverter() {
               <Button
                 key={button.value}
                 variant={
-                  lastConversion === button.value ? "default" : "outline"
+                  lastConversion === button.value ? "default" : "outline-solid"
                 }
                 size="sm"
                 onClick={() => convertCase(button.value)}

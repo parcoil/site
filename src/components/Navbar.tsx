@@ -58,7 +58,7 @@ function Navbar() {
                       <li className="row-span-3">
                         <NavigationMenuLink asChild>
                           <a
-                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-primary/20 to-primary/50 p-6 no-underline outline-none focus:shadow-md"
+                            className="flex h-full w-full select-none flex-col justify-end rounded-md bg-linear-to-b from-primary/20 to-primary/50 p-6 no-underline outline-hidden focus:shadow-md"
                             href="/tools"
                           >
                             <Tools className="h-6 w-6 mb-2" />
@@ -74,7 +74,7 @@ function Navbar() {
                       <li>
                         <a
                           href="/tools/password-generator"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
                           <div className="text-sm font-medium leading-none flex items-center">
                             <LockKeyhole className="h-4 w-4 mr-2" />
@@ -88,7 +88,7 @@ function Navbar() {
                       <li>
                         <a
                           href="/tools/base64"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
                           <div className="text-sm font-medium leading-none flex items-center">
                             <File className="h-4 w-4 mr-2" />
@@ -102,7 +102,7 @@ function Navbar() {
                       <li>
                         <a
                           href="/tools/ip"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
                           <div className="text-sm font-medium leading-none flex items-center">
                             <Globe className="h-4 w-4 mr-2" />
@@ -116,7 +116,7 @@ function Navbar() {
                       {/* <li>
                         <a
                           href="/tools/packages"
-                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         >
                           <div className="text-sm font-medium leading-none flex items-center">
                             <Package className="h-4 w-4 mr-2" />

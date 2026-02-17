@@ -209,7 +209,7 @@ export default function DotlineClient() {
                 unoptimized
               />
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent animate-gradient">
+            <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-linear-to-r from-primary to-accent bg-clip-text text-transparent animate-gradient">
               Dotline
             </h1>
             <p className="text-lg md:text-xl text-black dark:text-gray-300 mb-4">
@@ -508,7 +508,7 @@ export default function DotlineClient() {
             <AdBanner />
           </div>
 
-          <div className="text-center bg-gradient-to-r from-primary/10 to-[#0042ff]/10 p-8 rounded-xl border border-primary/20 mb-10">
+          <div className="text-center bg-linear-to-r from-primary/10 to-[#0042ff]/10 p-8 rounded-xl border border-primary/20 mb-10">
             <h2 className="text-3xl font-bold mb-4 text-foreground">
               Ready to Try Dotline?
             </h2>

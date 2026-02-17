@@ -5,7 +5,7 @@ import Link from "next/link";
 function NotFound() {
   return (
     <div className="flex flex-col ">
-      <main className="flex-grow flex flex-col items-center justify-center p-4">
+      <main className="grow flex flex-col items-center justify-center p-4">
         <div className="text-center space-y-4">
           <h1 className="font-bold text-8xl text-primary">404</h1>
           <h2 className="text-3xl font-semibold text-foreground/80">

@@ -210,7 +210,7 @@ function page() {
                           <Badge variant="secondary">{tool.tag}</Badge>
                         </div>
                       </CardHeader>
-                      <CardContent className="flex-grow">
+                      <CardContent className="grow">
                         <p className="text-muted-foreground">
                           {tool.description}
                         </p>

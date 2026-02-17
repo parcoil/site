@@ -68,7 +68,7 @@ export default function RootLayout({ children }) {
         >
           <Toaster richColors />
           <Navbar />
-          <main className="flex-grow flex flex-col">{children}</main>
+          <main className="grow flex flex-col">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

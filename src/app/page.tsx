@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 };
 
 const GridBackground = () => (
-  <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:24px_24px]">
+  <div className="absolute inset-0 -z-10 h-full w-full bg-background bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-size-[24px_24px]">
     <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-primary/20 opacity-20 blur-[100px]"></div>
   </div>
 );
@@ -41,13 +41,13 @@ function Page() {
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       <GridBackground />
 
-      <main className="flex-grow flex flex-col items-center justify-center text-center px-4 pt-20 pb-16 relative">
+      <main className="grow flex flex-col items-center justify-center text-center px-4 pt-20 pb-16 relative">
         <div className="max-w-5xl mx-auto z-10">
           <Sparklecta />
 
           <div className="items-center justify-center flex mb-8">
             <div className="relative group">
-              <div className="absolute -inset-1 dark:bg-primary rounded-full dark:blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+              <div className="absolute -inset-1 dark:bg-primary rounded-full dark:blur-sm opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
               <div className="relative">
                 {/* <Image
                   src="/parcoil.png"
@@ -104,7 +104,7 @@ function Page() {
         </div>
       </main>
 
-      <section className="border-y bg-muted/30 backdrop-blur-sm">
+      <section className="border-y bg-muted/30 backdrop-blur-xs">
         <div className="max-w-6xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-border">
             <div className="flex flex-col items-center p-4">
@@ -176,7 +176,7 @@ function Page() {
       </section>
 
       <section className="py-8 px-4">
-        <div className="max-w-4xl mx-auto rounded-xl overflow-hidden shadow-sm border bg-background/50">
+        <div className="max-w-4xl mx-auto rounded-xl overflow-hidden shadow-xs border bg-background/50">
           <AdBanner />
         </div>
       </section>
@@ -184,7 +184,7 @@ function Page() {
       <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto relative">
           <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-full transform -translate-y-1/2"></div>
-          <div className="relative rounded-3xl bg-gradient-to-b from-primary/10 to-background border border-primary/20 p-8 md:p-12 text-center overflow-hidden">
+          <div className="relative rounded-3xl bg-linear-to-b from-primary/10 to-background border border-primary/20 p-8 md:p-12 text-center overflow-hidden">
             <div className="absolute top-0 right-0 p-12 opacity-10">
               <Sparkle className="w-64 h-64 text-primary" />
             </div>
@@ -220,8 +220,8 @@ function ProjectCard({
   description: string;
 }) {
   return (
-    <Card className="group relative overflow-hidden border-muted-foreground/10 bg-background/60 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+    <Card className="group relative overflow-hidden border-muted-foreground/10 bg-background/60 backdrop-blur-xs hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+      <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
       <CardHeader>
         <div className="w-12 h-12 bg-primary/10 text-primary rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
           {icon}

@@ -212,7 +212,7 @@ export default function SparkleClient() {
                 height={100}
               />
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-gradient-to-r from-[#0096ff] to-[#0042ff] bg-clip-text text-transparent animate-gradient">
+            <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-linear-to-r from-[#0096ff] to-[#0042ff] bg-clip-text text-transparent animate-gradient">
               Sparkle
             </h1>
             <p className="text-lg md:text-xl text-black dark:text-gray-300 mb-4">
@@ -330,7 +330,7 @@ export default function SparkleClient() {
                 Quick Install via PowerShell:
               </div>
               <div className="relative">
-                <pre className="overflow-x-auto whitespace-nowrap rounded-[--radius] bg-muted p-3 text-sm font-mono select-all pr-12  text-secondary-foreground border dark:text-white border-[#0096ff]/20">
+                <pre className="overflow-x-auto whitespace-nowrap rounded-(--radius) bg-muted p-3 text-sm font-mono select-all pr-12  text-secondary-foreground border dark:text-white border-[#0096ff]/20">
                   {powershellScript}
                 </pre>
                 <Button
@@ -399,7 +399,7 @@ export default function SparkleClient() {
 
           <div className="mb-20 flex min-h-screen flex-col items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
             <div className="flex w-full max-w-3xl flex-col items-center text-center">
-              <h2 className="animate-gradient mb-4 bg-gradient-to-r from-[#0096ff] to-[#0042ff] bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-4xl md:text-5xl line-height-12">
+              <h2 className="animate-gradient mb-4 bg-linear-to-r from-[#0096ff] to-[#0042ff] bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-4xl md:text-5xl line-height-12">
                 Debloat your PC without installing Sparkle
               </h2>
 
@@ -410,7 +410,7 @@ export default function SparkleClient() {
 
               <div className="group relative mt-2 flex w-full max-w-xl justify-center">
                 <button
-                  className="flex w-fit items-center justify-between gap-3 rounded-md border border-primary bg-background px-3 py-2 font-mono text-sm text-foreground shadow-sm transition-colors hover:bg-muted/40 dark:border-accent"
+                  className="flex w-fit items-center justify-between gap-3 rounded-md border border-primary bg-background px-3 py-2 font-mono text-sm text-foreground shadow-xs transition-colors hover:bg-muted/40 dark:border-accent"
                   onClick={() => {
                     navigator.clipboard.writeText(
                       "irm https://getsparkle.net/debloatscript | iex"
@@ -431,7 +431,7 @@ export default function SparkleClient() {
                 </span>
               </div>
 
-              <div className="mt-6 flex items-start gap-2 rounded-md bg-muted p-3 text-left text-sm text-muted-foreground drop-shadow-sm dark:border dark:border-accent dark:bg-muted/40 dark:drop-shadow-none">
+              <div className="mt-6 flex items-start gap-2 rounded-md bg-muted p-3 text-left text-sm text-muted-foreground drop-shadow-xs dark:border dark:border-accent dark:bg-muted/40 dark:drop-shadow-none">
                 <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                 <p>
                   Open Windows PowerShell as Administrator and paste the
@@ -469,9 +469,9 @@ export default function SparkleClient() {
               Easily install popular apps with Sparkle
             </p>
             <div className="marquee-container relative overflow-hidden">
-              <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent dark:from-background z-10 pointer-events-none"></div>
+              <div className="absolute left-0 top-0 bottom-0 w-20 bg-linear-to-r from-white to-transparent dark:from-background z-10 pointer-events-none"></div>
 
-              <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent dark:from-background z-10 pointer-events-none"></div>
+              <div className="absolute right-0 top-0 bottom-0 w-20 bg-linear-to-l from-white to-transparent dark:from-background z-10 pointer-events-none"></div>
               <div className="marquee-track">
                 {[...apps, ...apps]
                   .sort(() => Math.random() - 0.5)
@@ -515,7 +515,7 @@ export default function SparkleClient() {
             </div>
           </div>
 
-          <div className="text-center bg-gradient-to-r from-[#0096ff]/10 to-[#0042ff]/10 p-8 rounded-xl border border-[#0096ff]/20 mb-10">
+          <div className="text-center bg-linear-to-r from-[#0096ff]/10 to-[#0042ff]/10 p-8 rounded-xl border border-[#0096ff]/20 mb-10">
             <h2 className="text-3xl font-bold mb-4 text-foreground">
               Ready to Optimize Your Windows PC?
             </h2>
