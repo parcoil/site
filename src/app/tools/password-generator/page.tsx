@@ -38,7 +38,11 @@ export default function PasswordGeneratorPage() {
         <PasswordGenerator />
       </main>
 
-      <section className="mt-12 text-left max-w-2xl mx-auto">
+      <section className="py-8 px-4 mt-6">
+        <AdBanner />
+      </section>
+
+      <section className="mt-8 text-left max-w-2xl mx-auto">
         <h2 className="text-2xl font-semibold mb-4">
           Why Use a Password Generator?
         </h2>
@@ -74,14 +78,12 @@ export default function PasswordGeneratorPage() {
             <li>Copy your generated password with one click</li>
             <li>Use a different password for each of your accounts</li>
           </ol>
-         </div>
-       </section>
+        </div>
+      </section>
 
-       <section className="py-8 px-4">
-         <div className="max-w-4xl mx-auto">
-           <AdBanner />
-         </div>
-       </section>
-     </div>
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
+      </section>
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import JSONFormatter from "@/components/pages/tools/JSONFormatter";
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "JSON Formatter Tool | Format, Validate and Minify JSON Online",
@@ -38,7 +39,11 @@ export default function JSONFormatterPage() {
         <JSONFormatter />
       </main>
 
-      <section className="mt-12 prose max-w-none">
+      <section className="py-8 px-4 mt-6">
+        <AdBanner />
+      </section>
+
+      <section className="mt-8 prose max-w-none">
         <h2 className="text-2xl font-semibold mb-4">About JSON</h2>
         <p>
           JSON (JavaScript Object Notation) is a lightweight data-interchange format
@@ -53,6 +58,10 @@ export default function JSONFormatterPage() {
           <li>Data export/import</li>
           <li>Debugging API responses</li>
         </ul>
+      </section>
+
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
       </section>
     </main>
   );

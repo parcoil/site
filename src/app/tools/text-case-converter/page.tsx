@@ -1,5 +1,5 @@
 import TextCaseConverter from "@/components/pages/tools/TextCaseConverter";
-import React from "react";
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "Text Case Converter | Free Online Tool | Parcoil",
@@ -41,7 +41,11 @@ export default function TextCaseConverterPage() {
         <TextCaseConverter />
       </main>
 
-      <section className="mt-12 text-left max-w-2xl mx-auto">
+      <section className="py-8 px-4 mt-6">
+        <AdBanner />
+      </section>
+
+      <section className="mt-8 text-left max-w-2xl mx-auto">
         <h2 className="text-2xl font-semibold mb-4">
           About Text Cases
         </h2>
@@ -76,6 +80,10 @@ export default function TextCaseConverterPage() {
             <li><strong>kebab-case</strong> - CSS class names, HTML IDs and attributes</li>
           </ul>
         </div>
+      </section>
+
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
       </section>
     </div>
   );

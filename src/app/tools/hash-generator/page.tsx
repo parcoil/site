@@ -1,4 +1,5 @@
 import HashGenerator from "@/components/pages/tools/HashGenerator";
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "Hash Generator Tool | Generate MD5, SHA-1, SHA-256, SHA-384, SHA-512 Hashes",
@@ -39,7 +40,11 @@ export default function HashGeneratorPage() {
         <HashGenerator />
       </main>
 
-      <section className="mt-12 prose max-w-none">
+      <section className="py-8 px-4 mt-6">
+        <AdBanner />
+      </section>
+
+      <section className="mt-8 prose max-w-none">
         <h2 className="text-2xl font-semibold mb-4">About Cryptographic Hashing</h2>
         <p>
           Cryptographic hash functions are mathematical algorithms that map data of
@@ -55,6 +60,10 @@ export default function HashGeneratorPage() {
           <li>Blockchain and cryptocurrency</li>
           <li>File integrity verification</li>
         </ul>
+      </section>
+
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
       </section>
     </main>
   );

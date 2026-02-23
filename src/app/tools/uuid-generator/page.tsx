@@ -1,4 +1,5 @@
 import UUIDGenerator from "@/components/pages/tools/UUIDGenerator";
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "UUID Generator Tool | Generate Random UUIDs Online",
@@ -38,7 +39,11 @@ export default function UUIDGeneratorPage() {
         <UUIDGenerator />
       </main>
 
-      <section className="mt-12 prose max-w-none">
+      <section className="py-8 px-4 mt-6">
+        <AdBanner />
+      </section>
+
+      <section className="mt-8 prose max-w-none">
         <h2 className="text-2xl font-semibold mb-4">About UUIDs</h2>
         <p>
           A UUID (Universally Unique Identifier) is a 128-bit number used to
@@ -61,6 +66,10 @@ export default function UUIDGeneratorPage() {
           <li>File names in distributed systems</li>
           <li>Object identifiers in applications</li>
         </ul>
+      </section>
+
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
       </section>
     </main>
   );

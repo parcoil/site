@@ -41,7 +41,11 @@ export default function Base64EncoderDecoderPage() {
         <Base />
       </main>
 
-      <section className="mt-12 prose max-w-none">
+      <section className="py-8 px-4 mt-6">
+        <AdBanner />
+      </section>
+
+      <section className="mt-8 prose max-w-none">
         <h2 className="text-2xl font-semibold mb-4">About Base64 Encoding</h2>
         <p>
           Base64 is an encoding scheme that represents binary data in an ASCII
@@ -57,14 +61,12 @@ export default function Base64EncoderDecoderPage() {
           <li>Encoding email attachments (MIME)</li>
           <li>Storing complex data in XML or JSON</li>
           <li>Transferring data over protocols that may corrupt binary data</li>
-         </ul>
+          </ul>
        </section>
 
-       <section className="py-8 px-4">
-         <div className="max-w-4xl mx-auto">
-           <AdBanner />
-         </div>
-       </section>
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
+      </section>
      </main>
   );
 }

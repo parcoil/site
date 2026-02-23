@@ -1,4 +1,5 @@
 import UnitConverter from "@/components/pages/tools/UnitConverter";
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "Unit Converter Tool | Convert Length, Weight, Temperature Units",
@@ -37,7 +38,11 @@ export default function UnitConverterPage() {
         <UnitConverter />
       </main>
 
-      <section className="mt-12 prose max-w-none">
+      <section className="py-8 px-4 mt-6">
+        <AdBanner />
+      </section>
+
+      <section className="mt-8 prose max-w-none">
         <h2 className="text-2xl font-semibold mb-4">About Unit Conversion</h2>
         <p>
           Unit conversion is the process of converting a measurement from one unit
@@ -51,6 +56,10 @@ export default function UnitConverterPage() {
           <li>Temperature: Celsius to Fahrenheit</li>
           <li>Volume: liters to gallons, milliliters to fluid ounces</li>
         </ul>
+      </section>
+
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
       </section>
     </main>
   );

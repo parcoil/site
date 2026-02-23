@@ -1,4 +1,5 @@
 import WordCounter from "@/components/pages/tools/WordCounter";
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "Word Counter Tool | Count Words, Characters, and Lines Online",
@@ -38,7 +39,11 @@ export default function WordCounterPage() {
         <WordCounter />
       </main>
 
-      <section className="mt-12 prose max-w-none">
+      <section className="py-8 px-4 mt-6">
+        <AdBanner />
+      </section>
+
+      <section className="mt-8 prose max-w-none">
         <h2 className="text-2xl font-semibold mb-4">About Word Counting</h2>
         <p>
           Word counting is essential for various purposes including academic writing,
@@ -52,6 +57,10 @@ export default function WordCounterPage() {
           <li><strong>Characters (no spaces):</strong> Excluding spaces</li>
           <li><strong>Lines:</strong> Separated by line breaks</li>
         </ul>
+      </section>
+
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
       </section>
     </main>
   );

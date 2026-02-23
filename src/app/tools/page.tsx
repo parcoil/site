@@ -1,13 +1,3 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardFooter,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Globe,
   LockKeyhole,
@@ -15,247 +5,174 @@ import {
   QrCode,
   Palette,
   Type,
-  Search,
-  ArrowRight,
   LinkIcon,
   Code,
-  Shield,
   Calculator,
   FileText,
   Key,
 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
-  title: "Tools | Parcoil",
-  description: "Free online tools to help with everyday tasks",
+  title: "Free Online Tools | Password Generator, JSON Formatter & More | Parcoil",
+  description: "Free online tools including password generator, base64 encoder, QR code generator, color picker, JSON formatter, URL encoder, hash generator, and more. No sign-up required.",
   keywords: [
-    "tools",
-    "utilities",
     "online tools",
     "free tools",
-    "web tools",
-    "Parcoil",
+    "password generator",
+    "base64 encoder",
+    "qr code generator",
+    "json formatter",
+    "color picker",
+    "url encoder",
+    "hash generator",
+    "word counter",
+    "unit converter",
+    "uuid generator",
+    "text converter",
   ],
 };
-function page() {
-  const tools = [
-    {
-      name: "Base64 Encoder/Decoder",
-      description:
-        "Encode and decode text to/from base64 format quickly and easily",
-      link: "/tools/base64",
-      icon: <File size={28} />,
-      category: "encoding",
-      tag: "Data",
-      popular: true,
-    },
-    {
-      name: "Password Generator",
-      description:
-        "Generate secure, random passwords with customizable options",
-      link: "/tools/password-generator",
-      icon: <LockKeyhole size={28} />,
-      category: "security",
-      tag: "Security",
-      popular: true,
-    },
-    {
-      name: "IP Info",
-      description: "Get detailed information about your IP address and network",
-      link: "/tools/ip",
-      icon: <Globe size={28} />,
-      category: "network",
-      tag: "Network",
-    },
-    {
-      name: "QR Code Generator",
-      description:
-        "Create QR codes for URLs or text that can be scanned with any device",
-      link: "/tools/qr-code",
-      icon: <QrCode size={28} />,
-      category: "encoding",
-      tag: "Media",
-      popular: true,
-    },
-    {
-      name: "Color Picker & Converter",
-      description:
-        "Select colors visually and convert between HEX, RGB, and HSL formats",
-      link: "/tools/color-picker",
-      icon: <Palette size={28} />,
-      category: "design",
-      tag: "Design",
-      popular: true,
-    },
-    {
-      name: "Text Case Converter",
-      description:
-        "Transform text between different case formats with a single click",
-      link: "/tools/text-case-converter",
-      icon: <Type size={28} />,
-      category: "text",
-      tag: "Text",
-    },
-    {
-      name: "URL Encoder/Decoder",
-      description:
-        "Encode and decode URLs for safe transmission over the internet",
-      link: "/tools/url-encoder",
-      icon: <LinkIcon size={28} />,
-      category: "encoding",
-      tag: "Web",
-    },
-    {
-      name: "JSON Formatter",
-      description:
-        "Format, validate, and minify JSON data for better readability",
-      link: "/tools/json-formatter",
-      icon: <Code size={28} />,
-      category: "text",
-      tag: "Data",
-      popular: true,
-    },
-    {
-      name: "Unit Converter",
-      description:
-        "Convert between different units of length, weight, and temperature",
-      link: "/tools/unit-converter",
-      icon: <Calculator size={28} />,
-      category: "converter",
-      tag: "Math",
-      popular: true,
-    },
-    {
-      name: "Word Counter",
-      description:
-        "Count words, characters, and lines in your text with real-time updates",
-      link: "/tools/word-counter",
-      icon: <FileText size={28} />,
-      category: "text",
-      tag: "Text",
-    },
-    {
-      name: "UUID Generator",
-      description:
-        "Generate random UUIDs for unique identifiers in your applications",
-      link: "/tools/uuid-generator",
-      icon: <Key size={28} />,
-      category: "generator",
-      tag: "ID",
-    },
-  ];
 
-  const categories = [
-    { id: "all", name: "All Tools" },
-    { id: "popular", name: "Popular" },
-    { id: "text", name: "Text Tools" },
-    { id: "encoding", name: "Encoding" },
-    { id: "security", name: "Security" },
-    { id: "design", name: "Design" },
-    { id: "network", name: "Network" },
-    { id: "converter", name: "Converters" },
-    { id: "generator", name: "Generators" },
-  ];
+const tools = [
+  {
+    name: "Password Generator",
+    description: "Create strong, secure passwords with customizable options",
+    link: "/tools/password-generator",
+    icon: <LockKeyhole className="h-5 w-5" />,
+  },
+  {
+    name: "Base64 Encoder",
+    description: "Encode and decode text to Base64 format instantly",
+    link: "/tools/base64",
+    icon: <File className="h-5 w-5" />,
+  },
+  {
+    name: "QR Code Generator",
+    description: "Generate QR codes for URLs, text, and more",
+    link: "/tools/qr-code",
+    icon: <QrCode className="h-5 w-5" />,
+  },
+  {
+    name: "Color Picker",
+    description: "Pick colors and convert between HEX, RGB, HSL",
+    link: "/tools/color-picker",
+    icon: <Palette className="h-5 w-5" />,
+  },
+  {
+    name: "JSON Formatter",
+    description: "Format, validate, and minify JSON data",
+    link: "/tools/json-formatter",
+    icon: <Code className="h-5 w-5" />,
+  },
+  {
+    name: "URL Encoder",
+    description: "Encode and decode URLs for safe transmission",
+    link: "/tools/url-encoder",
+    icon: <LinkIcon className="h-5 w-5" />,
+  },
+  {
+    name: "Hash Generator",
+    description: "Generate MD5, SHA-1, SHA-256, SHA-512 hashes",
+    link: "/tools/hash-generator",
+    icon: <LockKeyhole className="h-5 w-5" />,
+  },
+  {
+    name: "IP Info",
+    description: "View your public IP address and location details",
+    link: "/tools/ip",
+    icon: <Globe className="h-5 w-5" />,
+  },
+  {
+    name: "Unit Converter",
+    description: "Convert length, weight, temperature, and volume",
+    link: "/tools/unit-converter",
+    icon: <Calculator className="h-5 w-5" />,
+  },
+  {
+    name: "Word Counter",
+    description: "Count words, characters, sentences, and lines",
+    link: "/tools/word-counter",
+    icon: <FileText className="h-5 w-5" />,
+  },
+  {
+    name: "Text Case Converter",
+    description: "Convert text to uppercase, lowercase, camelCase, and more",
+    link: "/tools/text-case-converter",
+    icon: <Type className="h-5 w-5" />,
+  },
+  {
+    name: "UUID Generator",
+    description: "Generate random UUID v4 identifiers",
+    link: "/tools/uuid-generator",
+    icon: <Key className="h-5 w-5" />,
+  },
+];
 
+export default function Page() {
   return (
-    <div className="min-h-screen">
-      <div className="container mx-auto py-8 px-4">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-4">Free Online Tools</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A collection of free, simple, and useful online tools to help with
-            everyday tasks. No sign-up required, and all tools work directly in
-            your browser.
+    <div className="min-h-screen py-12 px-4">
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-10">
+          <h1 className="text-3xl font-bold mb-3">Free Online Tools</h1>
+          <p className="text-muted-foreground max-w-lg mx-auto">
+            A collection of free, simple, and useful online tools to help with everyday tasks. No sign-up required, and all tools work directly in your browser.
           </p>
         </div>
 
-        <Tabs defaultValue="all" className="w-full">
-          <div className="flex justify-center mb-6">
-            <TabsList className="mb-4">
-              {categories.map((category) => (
-                <TabsTrigger key={category.id} value={category.id}>
-                  {category.name}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
-
-          {categories.map((category) => (
-            <TabsContent key={category.id} value={category.id} className="mt-2">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {tools
-                  .filter((tool) =>
-                    category.id === "all"
-                      ? true
-                      : category.id === "popular"
-                      ? tool.popular
-                      : tool.category === category.id
-                  )
-                  .map((tool) => (
-                    <Card
-                      key={tool.name}
-                      className="flex flex-col h-full transition-all duration-200 hover:shadow-lg"
-                    >
-                      <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 rounded-full bg-primary/10">
-                              {tool.icon}
-                            </div>
-                            <h2 className="text-xl font-bold">{tool.name}</h2>
-                          </div>
-                          <Badge variant="secondary">{tool.tag}</Badge>
-                        </div>
-                      </CardHeader>
-                      <CardContent className="grow">
-                        <p className="text-muted-foreground">
-                          {tool.description}
-                        </p>
-                      </CardContent>
-                      <CardFooter className="pt-0">
-                        <Link href={tool.link} className="w-full">
-                          <Button className="w-full group" size="sm">
-                            Use Tool
-                            <ArrowRight
-                              size={16}
-                              className="ml-2 transition-transform group-hover:translate-x-1"
-                            />
-                          </Button>
-                        </Link>
-                      </CardFooter>
-                    </Card>
-                  ))}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {tools.map((tool) => (
+            <Link
+              key={tool.name}
+              href={tool.link}
+              className="group flex items-start gap-4 p-4 rounded-lg border bg-card hover:border-primary/50 transition-colors"
+            >
+              <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                {tool.icon}
               </div>
-
-              {category.id !== "all" &&
-                tools.filter((tool) =>
-                  category.id === "popular"
-                    ? tool.popular
-                    : tool.category === category.id
-                ).length === 0 && (
-                  <div className="text-center py-12">
-                    <Search className="mx-auto h-12 w-12 text-muted-foreground/50" />
-                    <h3 className="mt-4 text-lg font-semibold">
-                      No tools found
-                    </h3>
-                    <p className="text-muted-foreground">
-                      There are no tools in this category yet.
-                    </p>
-                  </div>
-                )}
-            </TabsContent>
+              <div className="min-w-0">
+                <h3 className="font-medium">{tool.name}</h3>
+                <p className="text-sm text-muted-foreground">{tool.description}</p>
+              </div>
+            </Link>
           ))}
-        </Tabs>
-
-        <div className="mt-12 w-full">
-          <AdBanner />
         </div>
+
+        <section className="py-8 px-4 mt-8">
+          <AdBanner />
+        </section>
+
+        <section className="mt-12 max-w-3xl mx-auto">
+          <h2 className="text-2xl font-semibold mb-4">Free Online Developer Tools</h2>
+          <p className="text-muted-foreground mb-4">
+            Parcoil offers a collection of free online tools for developers, designers, and everyday users. 
+            All tools run directly in your browser with no server-side processing, ensuring your data stays private.
+          </p>
+          
+          <h3 className="text-xl font-medium mt-6 mb-3">Why Use Our Tools?</h3>
+          <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+            <li><strong>100% Free</strong> - No subscriptions, no hidden fees, no sign-up required</li>
+            <li><strong>Privacy First</strong> - All processing happens locally in your browser</li>
+            <li><strong>Fast & Reliable</strong> - No waiting for server responses, instant results</li>
+            <li><strong>Mobile Friendly</strong> - Works great on desktop, tablet, and phone</li>
+          </ul>
+
+          <h3 className="text-xl font-medium mt-6 mb-3">Popular Tools</h3>
+          <p className="text-muted-foreground">
+            Our <strong>Password Generator</strong> creates strong, secure passwords with customizable length and character options. 
+            The <strong>JSON Formatter</strong> helps developers beautify, minify, and validate JSON data instantly. 
+            Use the <strong>QR Code Generator</strong> to create scannable codes for URLs, text, or contact information. 
+            The <strong>Color Picker</strong> lets designers select and convert colors between HEX, RGB, and HSL formats.
+          </p>
+
+          <h3 className="text-xl font-medium mt-6 mb-3">Developer Utilities</h3>
+          <p className="text-muted-foreground">
+            For developers, we offer essential encoding and decoding tools including <strong>Base64 Encoder/Decoder</strong>, 
+            <strong>URL Encoder/Decoder</strong>, and <strong>Hash Generator</strong> supporting MD5, SHA-1, SHA-256, and SHA-512 algorithms. 
+            Generate unique identifiers with our <strong>UUID Generator</strong> or check your public IP address with <strong>IP Info</strong>.
+          </p>
+        </section>
       </div>
     </div>
   );
 }
-
-export default page;

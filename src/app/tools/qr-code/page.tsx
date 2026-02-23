@@ -1,5 +1,5 @@
 import QRCodeGenerator from "@/components/pages/tools/QRCode";
-import React from "react";
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "QR Code Generator | Free Online Tool | Parcoil",
@@ -40,7 +40,11 @@ export default function QRCodeGeneratorPage() {
         <QRCodeGenerator />
       </main>
 
-      <section className="mt-12 text-left max-w-2xl mx-auto">
+      <section className="py-8 px-4 mt-6">
+        <AdBanner />
+      </section>
+
+      <section className="mt-8 text-left max-w-2xl mx-auto">
         <h2 className="text-2xl font-semibold mb-4">
           What are QR Codes Used For?
         </h2>
@@ -72,6 +76,10 @@ export default function QRCodeGeneratorPage() {
             <li>Test your QR code by scanning it with a smartphone camera</li>
           </ol>
         </div>
+      </section>
+
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
       </section>
     </div>
   );

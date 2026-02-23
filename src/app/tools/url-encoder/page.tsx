@@ -1,4 +1,5 @@
 import URLEncoder from "@/components/pages/tools/URLEncoder";
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "URL Encoder/Decoder Tool | Encode and Decode URLs Online",
@@ -38,7 +39,11 @@ export default function URLEncoderDecoderPage() {
         <URLEncoder />
       </main>
 
-      <section className="mt-12 prose max-w-none">
+      <section className="py-8 px-4 mt-6">
+        <AdBanner />
+      </section>
+
+      <section className="mt-8 prose max-w-none">
         <h2 className="text-2xl font-semibold mb-4">About URL Encoding</h2>
         <p>
           URL encoding, also known as percent-encoding, is a mechanism for encoding
@@ -53,6 +58,10 @@ export default function URLEncoderDecoderPage() {
           <li>Transmitting special characters in web addresses</li>
           <li>API calls with complex data</li>
         </ul>
+      </section>
+
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
       </section>
     </main>
   );

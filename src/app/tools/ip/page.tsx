@@ -1,5 +1,5 @@
 import IPInfoCard from "@/components/pages/tools/ip";
-import React from "react";
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "Parcoil — IP Info",
@@ -21,6 +21,11 @@ function page() {
   return (
     <>
       <IPInfoCard />
+      
+      <section className="py-8 px-4">
+        <AdBanner />
+      </section>
+      
       <div className="px-4 py-6 max-w-3xl mx-auto ">
         <h1 className="text-2xl font-semibold mb-4">What is an IP Address?</h1>
         <p className="mb-4">
@@ -50,6 +55,10 @@ function page() {
           <li>To configure firewall or port forwarding</li>
         </ul>
       </div>
+
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
+      </section>
     </>
   );
 }

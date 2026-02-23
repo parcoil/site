@@ -1,5 +1,5 @@
 import ColorPicker from "@/components/pages/tools/ColorPicker";
-import React from "react";
+import AdBanner from "@/components/AdBanner";
 
 export const metadata = {
   title: "Color Picker & Converter | Free Online Tool | Parcoil",
@@ -41,7 +41,11 @@ export default function ColorPickerPage() {
         <ColorPicker />
       </main>
 
-      <section className="mt-12 text-left max-w-2xl mx-auto">
+      <section className="py-8 px-4 mt-6">
+        <AdBanner />
+      </section>
+
+      <section className="mt-8 text-left max-w-2xl mx-auto">
         <h2 className="text-2xl font-semibold mb-4">
           About Color Formats
         </h2>
@@ -70,6 +74,10 @@ export default function ColorPickerPage() {
             <li>Export your color palette for use in your projects</li>
           </ol>
         </div>
+      </section>
+
+      <section className="py-8 px-4 mt-8">
+        <AdBanner />
       </section>
     </div>
   );
