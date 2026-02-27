@@ -7,6 +7,7 @@ import {
   LockKeyhole,
   PenToolIcon as Tools,
   Package,
+  BookOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "./ui/theme-changer";
@@ -137,6 +138,14 @@ function Navbar() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <Button variant="ghost" asChild>
+                    <a href="/blog">
+                      <BookOpen className="h-4 w-4 mr-2" />
+                      Blog
+                    </a>
+                  </Button>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <Button variant="ghost" asChild>
                     <a href="/dotline">
                       Dotline <Badge variant="default">NEW</Badge>
                     </a>
@@ -257,6 +266,12 @@ function Navbar() {
 
             <Button variant="ghost" className="w-full justify-start" asChild>
               <a href="/sparkle">Sparkle</a>
+            </Button>
+            <Button variant="ghost" className="w-full justify-start" asChild>
+              <a href="/blog">
+                <BookOpen className="h-5 w-5 mr-2" />
+                Blog
+              </a>
             </Button>
             <Button variant="ghost" className="w-full justify-start" asChild>
               <a href="/dotline">
