@@ -43,7 +43,7 @@ export default function WordCounterPage() {
         <AdBanner />
       </section>
 
-      <section className="mt-8 prose max-w-none">
+      <section className="mt-8 prose dark:prose-invert max-w-none">
         <h2 className="text-2xl font-semibold mb-4">About Word Counting</h2>
         <p>
           Word counting is essential for various purposes including academic writing,

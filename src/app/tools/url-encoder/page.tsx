@@ -43,7 +43,7 @@ export default function URLEncoderDecoderPage() {
         <AdBanner />
       </section>
 
-      <section className="mt-8 prose max-w-none">
+      <section className="mt-8 prose dark:prose-invert max-w-none">
         <h2 className="text-2xl font-semibold mb-4">About URL Encoding</h2>
         <p>
           URL encoding, also known as percent-encoding, is a mechanism for encoding

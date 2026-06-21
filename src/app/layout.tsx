@@ -10,9 +10,9 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Parcoil",
-  description: "Creators of Lunaar and Sparkle Windows optimizer. ",
+  description: "Creators of Sparkle Windows Debloat Utility. ",
   keywords:
-    "Parcoil, Lunaar, Starlight, Sparkle, Windows optimizer, unblocked games, open source, optimizer, windows tweaks, windows tweaker, vtrl, hone",
+    "Parcoil, Lunaar, Starlight, Sparkle, Windows Utility, unblocked games, open source, optimizer, debloater, windows tweaks, windows tweaker, vtrl, hone",
   robots: "index, follow",
 };
 const poppins = Poppins({

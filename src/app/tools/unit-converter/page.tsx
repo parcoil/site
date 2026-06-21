@@ -42,7 +42,7 @@ export default function UnitConverterPage() {
         <AdBanner />
       </section>
 
-      <section className="mt-8 prose max-w-none">
+      <section className="mt-8 prose dark:prose-invert max-w-none">
         <h2 className="text-2xl font-semibold mb-4">About Unit Conversion</h2>
         <p>
           Unit conversion is the process of converting a measurement from one unit
