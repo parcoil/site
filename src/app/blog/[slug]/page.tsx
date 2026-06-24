@@ -1,14 +1,22 @@
 import { getPostData, getAllPostSlugs } from "@/lib/blog";
 import { format } from "date-fns";
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import BlogCover from "@/components/blog/BlogCover";
 
 export async function generateStaticParams() {
   const paths = getAllPostSlugs();
   return paths.map((path) => path.params);
 }
+
+type post = {
+  title: string;
+  description?: string;
+  date: string;
+  author?: string;
+  cover?: string;
+  coverComponent?: string;
+  content: string;
+};
 
 export async function generateMetadata({
   params,
@@ -17,10 +25,10 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   try {
-    const post = await getPostData(slug);
+    const post: post = await getPostData(slug);
     return {
       title: `${post.title} - Parcoil Blog`,
-      description: post.excerpt,
+      description: post.description,
     };
   } catch {
     return {
@@ -36,7 +44,7 @@ export default async function BlogPostPage({
 }) {
   const { slug } = await params;
 
-  let post;
+  let post: post;
   try {
     post = await getPostData(slug);
   } catch {
@@ -45,19 +53,29 @@ export default async function BlogPostPage({
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
-      <Link href="/blog">
-        <Button variant="ghost" className="mb-8 pl-0 hover:pl-0">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Blog
-        </Button>
-      </Link>
-
+      <BlogCover cover={post.cover} coverComponent={post.coverComponent} />
       <article>
-        <header className="mb-8">
+        <header className="mb-4">
           <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
-          <time className="text-muted-foreground">
-            {format(new Date(post.date), "MMMM d, yyyy")}
-          </time>
+          <p className="text-lg text-muted-foreground">{post.description}</p>
+          <div className="flex items-center gap-2  mt-2">
+            {post.author && (
+              <div className="flex items-center gap-2">
+                <img
+                  src={`https://github.com/${post.author}.png`}
+                  alt={`${post.author} avatar`}
+                  width={24}
+                  height={24}
+                  className="rounded-full"
+                />
+                <p className="font-medium">{post.author}</p>
+              </div>
+            )}
+            <p className="text-muted-foreground m-0">•</p>
+            <time className="text-muted-foreground">
+              {format(new Date(post.date), "MMMM d, yyyy")}
+            </time>
+          </div>
         </header>
 
         <div

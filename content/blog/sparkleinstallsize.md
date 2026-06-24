@@ -1,7 +1,9 @@
 ---
 title: "How I reduced Sparkle's install  size from 464mb to 268mb"
 date: "2026-02-26"
-excerpt: "Welcome to our new blog where we'll share updates, tutorials, and insights about our projects."
+description: "A deep dive into optimizing Sparkle's install size by removing bundled dependencies and unused locales."
+author: Thedogecraft
+coverComponent: sparkle
 ---
 
 In the Sparkle Patch 2.14.2 I was able to make major size improvements to Sparkle.

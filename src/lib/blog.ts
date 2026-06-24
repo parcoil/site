@@ -10,6 +10,10 @@ export interface BlogPost {
   slug: string;
   title: string;
   date: string;
+  description?: string;
+  author?: string;
+  cover?: string;
+  coverComponent?: string;
   excerpt: string;
   content: string;
 }
@@ -32,6 +36,10 @@ export function getSortedPostsData(): BlogPost[] {
         slug,
         title: matterResult.data.title,
         date: matterResult.data.date,
+        description: matterResult.data.description,
+        author: matterResult.data.author,
+        cover: matterResult.data.cover,
+        coverComponent: matterResult.data.coverComponent,
         excerpt: matterResult.data.excerpt || '',
         content: matterResult.content,
       };
@@ -71,6 +79,10 @@ export async function getPostData(slug: string): Promise<BlogPost> {
     slug,
     title: matterResult.data.title,
     date: matterResult.data.date,
+    description: matterResult.data.description,
+    author: matterResult.data.author,
+    cover: matterResult.data.cover,
+    coverComponent: matterResult.data.coverComponent,
     excerpt: matterResult.data.excerpt || '',
     content: contentHtml,
   };
