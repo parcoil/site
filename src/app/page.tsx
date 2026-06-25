@@ -47,7 +47,7 @@ function Page() {
 
           <div className="items-center justify-center flex mb-8">
             <div className="relative group">
-              <div className="absolute -inset-1 dark:bg-primary rounded-full dark:blur-3xl opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+              {/* <div className="absolute -inset-1 dark:bg-primary rounded-full dark:blur-3xl opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div> */}
               <div className="relative">
                 {/* <Image
                   src="/parcoil.png"
@@ -189,7 +189,7 @@ function Page() {
         </div>
       </section>
 
-      <section className="py-16 px-4">
+      {/* <section className="py-16 px-4">
         <div className="max-w-5xl mx-auto relative">
           <div className="absolute inset-0 bg-primary/10 blur-3xl rounded-full transform -translate-y-1/2 -z-10"></div>
           <div className="relative rounded-3xl bg-linear-to-b from-primary/10 to-background border border-primary/20 p-8 md:p-12 text-center overflow-hidden">
@@ -213,7 +213,7 @@ function Page() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </div>
   );
 }
