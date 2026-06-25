@@ -65,6 +65,7 @@ export default function RootLayout({ children }) {
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
+          themes={["light", "dark", "oled"]}
         >
           <Toaster richColors />
           <Navbar />
