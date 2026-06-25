@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @import "tw-animate-css";
@@ -11,7 +10,7 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
+  --background: oklch(0.9761 0 0);
   --foreground: oklch(0.1448 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.1448 0 0);
@@ -35,11 +34,11 @@
   --chart-3: oklch(0.5495 0.2202 263.0917);
   --chart-4: oklch(0.4893 0.2202 264.0405);
   --chart-5: oklch(0.421 0.1792 266.0094);
-  --sidebar: oklch(0.9851 0 0);
+  --sidebar: oklch(0.9761 0 0);
   --sidebar-foreground: oklch(0.1448 0 0);
-  --sidebar-primary: oklch(0.2046 0 0);
+  --sidebar-primary: oklch(0.5547 0.2503 297.0156);
   --sidebar-primary-foreground: oklch(0.9851 0 0);
-  --sidebar-accent: oklch(0.9702 0 0);
+  --sidebar-accent: oklch(0.8575 0.0145 268.4756);
   --sidebar-accent-foreground: oklch(0.2046 0 0);
   --sidebar-border: oklch(0.9219 0 0);
   --sidebar-ring: oklch(0.709 0 0);
@@ -52,7 +51,7 @@
   --shadow-blur: 3px;
   --shadow-spread: 0px;
   --shadow-opacity: 0.1;
-  --shadow-color: oklch(0 0 0);
+  --shadow-color: #000000;
   --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-sm:
@@ -78,11 +77,11 @@
   --popover-foreground: oklch(0.9851 0 0);
   --primary: oklch(0.7871 0.1187 304.7693);
   --primary-foreground: oklch(0.2046 0 0);
-  --secondary: oklch(0.4765 0.034 278.643);
+  --secondary: oklch(0.491 0.0437 329.0775);
   --secondary-foreground: oklch(1 0 0);
   --muted: oklch(0.2686 0 0);
   --muted-foreground: oklch(0.709 0 0);
-  --accent: oklch(0.324 0.0319 281.9784);
+  --accent: oklch(0.2582 0.0215 305.5619);
   --accent-foreground: oklch(0.9851 0 0);
   --destructive: oklch(0.7022 0.1892 22.2279);
   --destructive-foreground: oklch(0.9851 0 0);
@@ -98,7 +97,7 @@
   --sidebar-foreground: oklch(0.9851 0 0);
   --sidebar-primary: oklch(0.4878 0.2432 264.4045);
   --sidebar-primary-foreground: oklch(0.9851 0 0);
-  --sidebar-accent: oklch(0.2686 0 0);
+  --sidebar-accent: oklch(0.2582 0.0215 305.5619);
   --sidebar-accent-foreground: oklch(0.9851 0 0);
   --sidebar-border: oklch(0.2768 0 0);
   --sidebar-ring: oklch(0.4386 0 0);
@@ -111,7 +110,7 @@
   --shadow-blur: 3px;
   --shadow-spread: 0px;
   --shadow-opacity: 0.1;
-  --shadow-color: oklch(0 0 0);
+  --shadow-color: #000000;
   --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-sm:
