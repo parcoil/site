@@ -1,5 +1,6 @@
 import WordCounter from "@/components/pages/tools/WordCounter";
 import AdBanner from "@/components/AdBanner";
+import BannerAd from "@/components/BannerAd";
 
 export const metadata = {
   title: "Word Counter Tool | Count Words, Characters, and Lines Online",
@@ -61,6 +62,10 @@ export default function WordCounterPage() {
 
       <section className="py-8 px-4 mt-8">
         <AdBanner />
+      </section>
+
+      <section className="py-8 px-4 flex justify-center">
+        <BannerAd adKey="fd31f3a208951023a4608886cfeb1c42" width={300} height={250} />
       </section>
     </main>
   );

@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "next-themes";
 import Footer from "@/components/Footer";
+import BannerAd from "@/components/BannerAd";
 import { Toaster } from "@/components/ui/sonner";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
@@ -69,7 +70,9 @@ export default function RootLayout({ children }) {
         >
           <Toaster richColors />
           <Navbar />
+          <BannerAd adKey="792739fe386cbc9cf97f00d8858703f6" width={468} height={60} />
           <main className="grow flex flex-col">{children}</main>
+          <BannerAd adKey="6f03a53b58ea2b76ea16b97726173a12" width={728} height={90} />
           <Footer />
         </ThemeProvider>
       </body>

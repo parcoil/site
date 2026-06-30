@@ -14,6 +14,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import BannerAd from "@/components/BannerAd";
 
 export const metadata = {
   title: "Tools | Parcoil",
@@ -124,6 +125,10 @@ export default function Page() {
           ))}
         </div>
       </div>
+
+      <section className="py-8 px-4 flex justify-center">
+        <BannerAd adKey="fd31f3a208951023a4608886cfeb1c42" width={300} height={250} />
+      </section>
     </div>
   );
 }
