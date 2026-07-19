@@ -10,6 +10,7 @@ import {
   Calculator,
   FileText,
   Key,
+  Gamepad,
 } from "lucide-react";
 import Link from "next/link";
 import AdBanner from "@/components/AdBanner";
@@ -106,6 +107,12 @@ const tools = [
     description: "Generate random UUID v4 identifiers",
     link: "/tools/uuid-generator",
     icon: <Key className="h-5 w-5" />,
+  },
+  {
+    name: "Gamepad Tester",
+    description: "Test your gamepad buttons, sticks, and triggers in real time",
+    link: "/tools/gamepad-tester",
+    icon: <Gamepad className="h-5 w-5" />,
   },
 ];
 
