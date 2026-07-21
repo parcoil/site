@@ -27,6 +27,9 @@ const nextConfig = {
   },
   // This is required to support PostHog trailing slash API requests
   skipTrailingSlashRedirect: true,
+  images: {
+    remotePatterns: [new URL("https://cdn.jsdelivr.net/**")],
+  },
 };
 
 export default nextConfig;

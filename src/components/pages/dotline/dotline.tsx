@@ -206,7 +206,7 @@ export default function DotlineClient() {
           <div className="text-center">
             <div className="flex justify-center mb-4 animate-bounce-slow">
               <Image
-                src="/dotline.png"
+                src="https://cdn.jsdelivr.net/gh/parcoil/dotline@main/resources/dotline.png"
                 alt="Dotline Logo"
                 width={100}
                 height={100}
@@ -402,7 +402,7 @@ export default function DotlineClient() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Image
-                      src="/dotline.png"
+                      src="https://cdn.jsdelivr.net/gh/parcoil/dotline@main/resources/dotline.png"
                       alt="Dotline"
                       width={28}
                       height={28}

@@ -16,7 +16,7 @@ function Sparklecta() {
       async function fetchVersion() {
         try {
           const res = await fetch(
-            "https://api.github.com/repos/Parcoil/Sparkle/releases/latest"
+            "https://api.github.com/repos/Parcoil/Sparkle/releases/latest",
           );
           if (!res.ok) throw new Error("Failed to fetch");
           const data = await res.json();
@@ -40,7 +40,11 @@ function Sparklecta() {
             className="text-lg px-4 py-2 font-semibold rounded-full hover:bg-primary hover:text-primary-foreground transition-colors gap-2 cursor-pointer"
           >
             <img
-              src={showDotline ? "/dotline.png" : "/sparklelogo.png"}
+              src={
+                showDotline
+                  ? "https://cdn.jsdelivr.net/gh/parcoil/dotline@main/resources/dotline.png"
+                  : "/sparklelogo.png"
+              }
               className="h-5 w-5"
               alt={showDotline ? "Dotline logo" : "Sparkle logo"}
             />
