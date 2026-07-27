@@ -36,6 +36,12 @@ export default function RootLayout({ children }) {
           strategy="afterInteractive"
         />
 
+        <Script
+          defer
+          data-website-id="7adad7fe-f5f9-40c0-9eb4-c4f3908f9a06"
+          src="https://umami.parcoil.com/script.js"
+          strategy="afterInteractive"
+        />
         <Script id="google-funding-choices" strategy="afterInteractive">
           {`
             (function() {
