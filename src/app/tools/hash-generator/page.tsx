@@ -1,5 +1,6 @@
 import HashGenerator from "@/components/pages/tools/HashGenerator";
 import AdBanner from "@/components/AdBanner";
+import BannerAd from "@/components/BannerAd";
 
 export const metadata = {
   title: "Hash Generator Tool | Generate MD5, SHA-1, SHA-256, SHA-384, SHA-512 Hashes",
@@ -64,6 +65,10 @@ export default function HashGeneratorPage() {
 
       <section className="py-8 px-4 mt-8">
         <AdBanner />
+      </section>
+
+      <section className="py-8 px-4 flex justify-center">
+        <BannerAd adKey="fd31f3a208951023a4608886cfeb1c42" width={300} height={250} />
       </section>
     </main>
   );

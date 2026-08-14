@@ -1,5 +1,6 @@
 import ColorPicker from "@/components/pages/tools/ColorPicker";
 import AdBanner from "@/components/AdBanner";
+import BannerAd from "@/components/BannerAd";
 
 export const metadata = {
   title: "Color Picker & Converter | Free Online Tool | Parcoil",
@@ -78,6 +79,10 @@ export default function ColorPickerPage() {
 
       <section className="py-8 px-4 mt-8">
         <AdBanner />
+      </section>
+
+      <section className="py-8 px-4 flex justify-center">
+        <BannerAd adKey="fd31f3a208951023a4608886cfeb1c42" width={300} height={250} />
       </section>
     </div>
   );

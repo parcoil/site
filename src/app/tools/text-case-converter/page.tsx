@@ -1,5 +1,6 @@
 import TextCaseConverter from "@/components/pages/tools/TextCaseConverter";
 import AdBanner from "@/components/AdBanner";
+import BannerAd from "@/components/BannerAd";
 
 export const metadata = {
   title: "Text Case Converter | Free Online Tool | Parcoil",
@@ -84,6 +85,10 @@ export default function TextCaseConverterPage() {
 
       <section className="py-8 px-4 mt-8">
         <AdBanner />
+      </section>
+
+      <section className="py-8 px-4 flex justify-center">
+        <BannerAd adKey="fd31f3a208951023a4608886cfeb1c42" width={300} height={250} />
       </section>
     </div>
   );
