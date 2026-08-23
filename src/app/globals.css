@@ -2,10 +2,9 @@
 @plugin "@tailwindcss/typography";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark *, .oled *));
 
 * {
-  user-select: none;
   scrollbar-color: var(--primary) var(--background);
 }
 
@@ -294,6 +293,7 @@
 
 body {
   letter-spacing: var(--tracking-normal);
+  user-select: none;
 }
 
 @layer base {
@@ -308,4 +308,8 @@ body {
 
 .blog-root img {
   @apply rounded-md;
+}
+body::selection {
+  color: var(--accent);
+  background-color: var(--accent-foreground);
 }

@@ -19,12 +19,8 @@ export default function BlogCover({ cover, coverComponent }: BlogCoverProps) {
 
   if (cover) {
     return (
-      <div className="mb-8 overflow-hidden rounded-xl">
-        <img
-          src={cover}
-          alt="Blog cover"
-          className="w-full object-cover"
-        />
+      <div className="mb-8 overflow-hidden rounded-xl border border-border">
+        <img src={cover} alt="Blog cover" className="w-full object-cover" />
       </div>
     );
   }
