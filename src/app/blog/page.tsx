@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getSortedPostsData } from "@/lib/blog";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { ChevronRightIcon } from "lucide-react";
 import { getCoverComponent } from "@/components/blog/covers";
 
@@ -55,14 +55,8 @@ export default function BlogPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-16">
-      <div className="max-w-4xl border-b pb-10 mb-12">
-        <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-          Parcoil
-        </p>
+      <div className="max-w-4xl pb-10 ">
         <h1 className="text-5xl font-bold tracking-tight mb-4">Blog</h1>
-        <p className="text-lg text-muted-foreground max-w-xl">
-          Updates, tutorials, and insights from the team.
-        </p>
       </div>
 
       {posts.length === 0 ? (
@@ -90,7 +84,7 @@ export default function BlogPage() {
                 <div className="flex flex-col flex-1 p-4 pt-3">
                   <div className="flex items-center gap-2 mb-2 text-xs text-muted-foreground font-medium uppercase tracking-wide">
                     <time dateTime={post.date}>
-                      {format(new Date(post.date), "MMM d, yyyy")}
+                      {format(parseISO(post.date), "MMM d, yyyy")}
                     </time>
                     {post.author && (
                       <>

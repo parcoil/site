@@ -1,5 +1,5 @@
 import { getPostData, getAllPostSlugs } from "@/lib/blog";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { notFound } from "next/navigation";
 import BlogCover from "@/components/blog/BlogCover";
 
@@ -73,7 +73,7 @@ export default async function BlogPostPage({
             )}
             <p className="text-muted-foreground m-0">•</p>
             <time className="text-muted-foreground">
-              {format(new Date(post.date), "MMMM d, yyyy")}
+              {format(parseISO(post.date), "MMMM d, yyyy")}
             </time>
           </div>
         </header>
