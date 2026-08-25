@@ -77,7 +77,9 @@ function page() {
               </li>
             </ul>
             <p>
-              <strong>We do not display ads in our desktop apps.</strong>
+              <strong className="text-primary">
+                We do not display ads in our desktop apps.
+              </strong>
             </p>
           </section>
 
