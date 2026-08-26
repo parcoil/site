@@ -20,7 +20,7 @@ const nextConfig = {
     return [
       {
         source: "/sparkle",
-        destination: "https://sparkle.parcoil.com",
+        destination: "https://getsparkle.net",
         permanent: false,
       },
     ];
