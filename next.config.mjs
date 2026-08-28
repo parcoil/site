@@ -18,11 +18,11 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      {
-        source: "/sparkle",
-        destination: "https://getsparkle.net",
-        permanent: false,
-      },
+      // {
+      //   source: "/sparkle",
+      //   destination: "https://getsparkle.net",
+      //   permanent: false,
+      // },
     ];
   },
   // This is required to support PostHog trailing slash API requests

@@ -1,59 +1,166 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
+import { motion } from "motion/react";
+import {
+  Download,
+  Shield,
+  ChevronDown,
+  Star,
+  Box,
+  LayoutGrid,
+  Trash2,
+  Wrench,
+  ArrowRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import AdBanner from "@/components/AdBanner";
 import {
   Card,
-  CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
+  CardDescription,
 } from "@/components/ui/card";
-import {
-  AlertCircle,
-  Download,
-  Github,
-  Trash2,
-  Zap,
-  LayoutGrid,
-  Globe,
-  AsteriskSquare,
-  ChevronDown,
-  Box,
-  Copy,
-  Paperclip,
-} from "lucide-react";
-import { sendGAEvent } from "@next/third-parties/google";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import Image from "next/image";
-
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import { CodeTabs } from "@/components/code-tabs";
+import AdBanner from "@/components/AdBanner";
 import { ReactLenis } from "lenis/react";
-import posthog from "posthog-js";
-import { TriangleAlert } from "lucide-react";
-import { toast } from "sonner";
 import Script from "next/script";
+import posthog from "posthog-js";
+import { sendGAEvent } from "@next/third-parties/google";
+
+const faqs = [
+  {
+    question: "Is Sparkle safe to use?",
+    answer:
+      "Yes! Sparkle only makes reversible changes. You can create system restore points before applying any tweaks.",
+  },
+  {
+    question: "Which versions of Windows are supported?",
+    answer: "Sparkle supports Windows 10 and 11.",
+  },
+  {
+    question: "Can I undo changes made by Sparkle?",
+    answer:
+      "Yes, all tweaks are reversible. You can either use Sparkle's built-in restore option or a system restore point.",
+  },
+  {
+    question: "Do I need an internet connection to use Sparkle?",
+    answer:
+      "The auto-updates require an internet connection. Most other features should work offline.",
+  },
+  {
+    question: "How often is Sparkle updated?",
+    answer:
+      "Sparkle is actively maintained, with new features, versions and bug fixes released regularly. Check GitHub or here for the latest version.",
+  },
+  {
+    question: "What should I do if I encounter an error?",
+    answer:
+      "Visit our GitHub Issues page to report bugs or join our Discord server for support.",
+  },
+  {
+    question: "Why does Sparkle ask for admin permissions?",
+    answer:
+      "Admin permissions are required to apply system-level tweaks and optimizations and using/creating restore points.",
+  },
+  {
+    question: "Why am i forced to update sparkle each time i open it?",
+    answer:
+      "Sparkle automatically checks for updates on launch. If an update is available, it will prompt you to update before continuing. The reason for this is microsoft is changeing windows rapidly and some tweaks may stop working or cause issues if not updated. By enforcing updates, we can ensure users have the best experience and avoid potential bugs from outdated versions.",
+  },
+  {
+    question: "Why am i seeing ads on the website?",
+    answer:
+      "To keep Sparkle free and open-source, we rely on ad revenue to cover hosting and development costs. We use non-intrusive ads that do not affect your experience on the site. If you find the ads disruptive, consider supporting us on GitHub or sharing Sparkle with friends!",
+  },
+];
+
+const features = [
+  {
+    title: "Debloat Windows",
+    description:
+      "Removes unnecessary Windows features and apps to free up resources and improve performance.",
+    icon: Star,
+    iconColor: "text-teal-500",
+  },
+  {
+    title: "Apply Tweaks",
+    description:
+      "Apply various tweaks to debloat windows, disable game bar, enable detailed bsod And more ",
+    icon: Wrench,
+    iconColor: "text-pink-500",
+  },
+  {
+    title: "Clean Temporary Files",
+    description:
+      "Remove temporary files, caches, and logs to free up valuable disk space.",
+    icon: Trash2,
+    iconColor: "text-yellow-500",
+  },
+  {
+    title: "Safe & Reversible",
+    description:
+      "All changes can be easily undone with system restore points or by reverting settings.",
+    icon: Shield,
+    iconColor: "text-red-500",
+  },
+  {
+    title: "App Installer",
+    description:
+      "Quickly install your favorite applications using winget or chocolatey without leaving Sparkle.",
+    icon: LayoutGrid,
+    iconColor: "text-blue-500",
+  },
+  {
+    title: "System Utilities",
+    description:
+      "Run essential system tools like SFC, Check Disk, and DISM from a simple, intuitive interface.",
+    icon: Box,
+    iconColor: "text-green-500",
+  },
+];
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.06,
+    },
+  },
+};
 
 async function getLatestRelease() {
   try {
     const res = await fetch(
-      "https://api.github.com/repos/Parcoil/Sparkle/releases/latest"
+      "https://api.github.com/repos/Parcoil/Sparkle/releases/latest",
     );
     if (!res.ok) throw new Error("Failed to fetch release");
     const release = await res.json();
 
     const setupAsset = release.assets.find((asset) =>
-      asset.name.endsWith("-setup.exe")
+      asset.name.endsWith("-setup.exe"),
     );
 
     const portableAsset = release.assets.find((asset) =>
-      asset.name.endsWith("-win.zip")
+      asset.name.endsWith("-win.zip"),
     );
 
     return {
@@ -77,7 +184,7 @@ async function getLatestRelease() {
 async function getTotalDownloads() {
   try {
     const res = await fetch(
-      "https://api.github.com/repos/Parcoil/Sparkle/releases"
+      "https://api.github.com/repos/Parcoil/Sparkle/releases",
     );
     if (!res.ok) throw new Error("Failed to fetch releases");
     const releases = await res.json();
@@ -101,96 +208,65 @@ async function getTotalDownloads() {
 }
 
 export default function SparkleClient() {
-  const [version, setVersion] = useState(null);
+  const [version, setVersion] = useState("");
+  const [downloads, setDownloads] = useState("");
   const [downloadUrl, setDownloadUrl] = useState("");
-  const [downloadName, setDownloadName] = useState(null);
   const [portableUrl, setPortableUrl] = useState("");
-  const [portableName, setPortableName] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [apps, setApps] = useState([]);
-  const [totalDownloads, setTotalDownloads] = useState(null);
-
-  const features = [
-    {
-      icon: <LayoutGrid className="text-green-500" />,
-      title: "Debloat Windows",
-      description:
-        "Removes Unnecessary Windows Features And Apps and features such Copilot, Xbox, OneDrive, etc.",
-    },
-    {
-      icon: <Zap className="text-[#0096ff]" />,
-      title: "System Optimization",
-      description:
-        "Enhance system performance and responsiveness with Sparkle's tweaks.",
-    },
-    {
-      icon: <Trash2 className="text-red-500" />,
-      title: "Clear temporary files",
-      description: "Remove temporary files, caches, and logs to free up space.",
-    },
-    {
-      icon: <AlertCircle className="text-orange-400" />,
-      title: "Safe & Reversible",
-      description:
-        "All changes can be undone with restore points, disabling the tweak, or changing system settings.",
-    },
-    {
-      icon: <AsteriskSquare className="text-primary" />,
-      title: "Built-in App Installer",
-      description: "Sparkle has a winget powered app installer built in!",
-    },
-    {
-      icon: <Box className="text-cyan-500" />,
-      title: "Utilities Page",
-      description: "Run System File Checker (SFC), Check Disk, DSIM from a GUI",
-    },
-    {
-      icon: <Globe className="text-yellow-500" />,
-      title: "DNS Changer",
-      description:
-        "Change your DNS settings to improve internet speed and security.",
-    },
-  ];
-
-  const powershellScript =
-    "irm https://raw.githubusercontent.com/Parcoil/Sparkle/v2/get.ps1 | iex";
-
-  const handleCopyScript = () => {
-    navigator.clipboard.writeText(powershellScript);
-    toast.success("Copied to clipboard");
-  };
+  const [showMovedAlert, setShowMovedAlert] = useState(false);
+  const [logoKey, setLogoKey] = useState(0);
 
   useEffect(() => {
-    setLoading(true);
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("ref") === "parcoil-sparkle-page") {
+        setShowMovedAlert(true);
+      }
+    }
+
     getLatestRelease().then((data) => {
-      setVersion(data.version);
+      setVersion(data.version ?? "");
       setDownloadUrl(data.downloadUrl);
-      setDownloadName(data.downloadName);
-      setPortableUrl(data.portableUrl);
-      setPortableName(data.portableName);
-      setLoading(false);
+      setPortableUrl(data.portableUrl ?? "");
     });
 
     getTotalDownloads().then((total) => {
-      setTotalDownloads(total);
+      if (total !== null) {
+        setDownloads(total.toLocaleString("en-US"));
+      }
     });
-
-    fetch(
-      "https://raw.githubusercontent.com/Parcoil/Sparkle/refs/heads/v2/src/renderer/src/assets/apps.json"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && Array.isArray(data.apps)) {
-          setApps(data.apps);
-        } else {
-          setApps([]);
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to fetch apps:", error);
-        setApps([]);
-      });
   }, []);
+
+  function handleDownload(type: "exe" | "zip") {
+    const url = type === "exe" ? downloadUrl : portableUrl;
+    if (!url || typeof window === "undefined") return;
+    window.open(url, "_blank", "noopener,noreferrer");
+    posthog.capture("sparkle_download_button", {
+      download_type: type,
+      location: "hero",
+      app_version: version || "unknown",
+    });
+    sendGAEvent("event", "sparkle_download_button", {
+      value: type === "exe" ? "homepage_button_exe" : "homepage_button_zip",
+      app_version: version || "unknown",
+    });
+  }
+
+  const replayLogoAnimation = () => {
+    setLogoKey((prev) => prev + 1);
+  };
+
+  const installMethods = [
+    {
+      label: "PowerShell",
+      value: "powershell",
+      code: "irm https://getsparkle.net/get | iex",
+    },
+    {
+      label: "Chocolatey",
+      value: "chocolatey",
+      code: "choco install sparkle --version=2.13.0",
+    },
+  ];
 
   return (
     <>
@@ -199,480 +275,401 @@ export default function SparkleClient() {
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1565760898646999"
         crossOrigin="anonymous"
       />
-      <div className="min-h-screen">
-        {/* <ReactLenis root /> */}
-        <div className="container mx-auto px-4 py-12 max-w-6xl">
-          <div className="text-center">
-            <div className="flex justify-center mb-4 animate-bounce-slow">
-              <Image
-                className=""
-                src="/sparklelogo.png"
-                alt="Sparkle Logo"
-                width={100}
-                height={100}
-              />
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-4 bg-linear-to-r from-[#0096ff] to-[#0042ff] bg-clip-text text-transparent animate-gradient">
-              Sparkle
-            </h1>
-            <p className="text-lg md:text-xl text-black dark:text-gray-300 mb-4">
-              The ultimate tool to optimize Windows and boost gaming performance
-            </p>
-            <div className="flex items-center justify-center gap-4 mb-4">
-              {version && (
-                <p className="text-sm text-muted-foreground">
-                  Latest Version:{" "}
-                  <a href="https://github.com/Parcoil/Sparkle">
-                    <strong className="text-[#0096ff]">{version}</strong>
-                  </a>
-                </p>
-              )}
-              {totalDownloads && (
-                <p className="text-sm text-muted-foreground">
-                  Total Downloads:{" "}
-                  <strong className="text-[#0096ff]">
-                    {totalDownloads.toLocaleString()}
-                  </strong>
-                </p>
-              )}
-            </div>
-            <div className="flex flex-wrap gap-4 justify-center">
-              {loading ? (
-                <Button
-                  disabled
-                  size="lg"
-                  className="bg-[#0096ff] hover:bg-blue-600 text-black"
-                >
-                  Loading...
-                </Button>
-              ) : (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      size="lg"
-                      className="bg-[#0096ff] hover:bg-blue-600 text-black"
-                    >
-                      <Download className="mr-2 h-5 w-5" />
-                      Download
-                      <ChevronDown className="ml-2 h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem asChild>
-                      <a
-                        href={downloadUrl}
-                        onClick={() => {
-                          posthog.capture("sparkle_download_button", {
-                            download_type: "exe",
-                          });
-                          sendGAEvent("event", "sparkle_download_button", {
-                            value: "homepage_button_exe",
-                            app_version: version ?? "unknown",
-                          });
-                        }}
-                        download={downloadName}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Windows Installer (.exe)
-                      </a>
-                    </DropdownMenuItem>
-                    {portableUrl && (
-                      <DropdownMenuItem asChild>
-                        <a
-                          href={portableUrl}
-                          onClick={() => {
-                            posthog.capture("sparkle_download_button", {
-                              download_type: "zip",
-                              app_version: version ?? "unknown",
-                            });
-                            sendGAEvent("event", "sparkle_download_button", {
-                              value: "homepage_button_zip",
-                            });
-                          }}
-                          download={portableName}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Portable Version (.zip)
-                        </a>
-                      </DropdownMenuItem>
-                    )}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
-              <Link href="https://github.com/Parcoil/Sparkle">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-[#0096ff] text-[#0096ff] hover:border-[#0096ff]/10"
-                >
-                  <Github className="mr-2 h-5 w-5" /> View on GitHub
-                </Button>
-              </Link>
-              <Link href="https://docs.getsparkle.net">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-primary text-primary "
-                >
-                  <Paperclip className="mr-2 h-5 w-5" /> View Docs
-                </Button>
-              </Link>
-            </div>
-          </div>
-          <div className="flex justify-center mb-8 mt-8">
-            <AdBanner />
-          </div>
-          <div className="flex flex-col items-center mb-8 mt-6">
-            <div className="relative w-full max-w-[700px]">
-              <div className="mb-2 text-sm text-muted-foreground text-center">
-                Quick Install via PowerShell:
-              </div>
-              <div className="relative">
-                <pre className="overflow-x-auto whitespace-nowrap rounded-(--radius) bg-muted p-3 text-sm font-mono select-all pr-12  text-secondary-foreground border dark:text-white border-[#0096ff]/20">
-                  {powershellScript}
-                </pre>
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="absolute top-1/2 right-2 transform -translate-y-1/2"
-                  onClick={handleCopyScript}
-                  aria-label="Copy PowerShell script"
-                  title={"Copy to clipboard"}
-                >
-                  <Copy className="h-4 w-4 text-secondary-foreground dark:text-white" />
-                </Button>
-              </div>
-            </div>
-          </div>
-
-          <img
-            src="https://raw.githubusercontent.com/Parcoil/Sparkle/refs/heads/v2/images/appshowcase.png"
-            className="w-full max-w-3xl mx-auto rounded-lg shadow-lg transition-transform duration-300 hover:scale-105 mb-4"
-            alt="Sparkle application screenshot"
+      <ReactLenis root />
+      <div className="mt-10 flex min-h-screen flex-col items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
+        <div className="flex w-full max-w-5xl flex-col items-center justify-center">
+          {showMovedAlert && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4 mb-6 w-full max-w-md rounded-lg border border-border bg-card px-4 py-3 text-center text-sm text-card-foreground"
+            >
+              Hello Parcoil user, Sparkle has moved to getsparkle.net
+            </motion.div>
+          )}
+          <motion.img
+            key={logoKey}
+            initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{
+              duration: 0.5,
+              type: "spring",
+              stiffness: 200,
+              damping: 20,
+            }}
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            onClick={replayLogoAnimation}
+            src="/sparklelogo.png"
+            alt="Sparkle Logo"
+            className="mb-6 h-20 w-20 cursor-pointer sm:h-24 sm:w-24"
           />
 
-          <div className="mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-[#0096ff] mb-8">
-              Features
-            </h2>
-            <p className="text-center text-muted-foreground mb-8">
-              Powerful optimizations to enhance your Windows experience
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {features.map((feature, i) => (
-                <Card
-                  key={i}
-                  className="hover:border-[#0096ff] hover:shadow-lg transition-all duration-300 group"
-                >
-                  <CardHeader className="pb-2">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-full bg-muted group-hover:bg-[#0096ff]/10 transition-colors">
-                        {feature.icon}
-                      </div>
-                      <div>
-                        <CardTitle className="text-xl flex items-center gap-2">
-                          {feature.title}
-                          {/* {feature.new && (
-                            <span className="text-white bg-red-500 text-xs px-2 py-0.5 rounded-full">
-                              New in v2.6.0
-                            </span>
-                          )} */}
-                        </CardTitle>
-                        {/* <CardDescription className="text-sm mt-1">
-                        {feature.categories?.join(" • ")}
-                      </CardDescription> */}
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="dark:text-gray-300">
-                    <p className="mb-2">{feature.description}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
-          <div className="flex justify-center mb-8">
-            <AdBanner />
-          </div>
-
-          <div className="mb-20 flex min-h-screen flex-col items-center justify-center px-4 py-6 sm:px-6 lg:px-8">
-            <div className="flex w-full max-w-3xl flex-col items-center text-center">
-              <h2 className="animate-gradient mb-4 bg-linear-to-r from-[#0096ff] to-[#0042ff] bg-clip-text pb-2 text-3xl font-bold text-transparent sm:text-4xl md:text-5xl line-height-12">
-                Debloat your PC without installing Sparkle
-              </h2>
-
-              <p className="mb-6 max-w-2xl text-base text-muted-foreground sm:text-lg">
-                If you want to debloat your PC without installing Sparkle, run
-                the following PowerShell command:
-              </p>
-
-              <div className="group relative mt-2 flex w-full max-w-xl justify-center">
-                <button
-                  className="flex w-fit items-center justify-between gap-3 rounded-md border border-primary bg-background px-3 py-2 font-mono text-sm text-foreground shadow-xs transition-colors hover:bg-muted/40 dark:border-accent"
-                  onClick={() => {
-                    navigator.clipboard.writeText(
-                      "irm https://getsparkle.net/debloatscript | iex"
-                    );
-                    toast.success("Copied to clipboard");
-                  }}
-                  aria-label="Copy command"
-                >
-                  <pre>
-                    irm
-                    https://raw.githubusercontent.com/parcoil/sparkle/v2/tweaks/debloat-windows/apply.ps1
-                    | iex
-                  </pre>
-                  <Copy className="h-4 w-4 opacity-80" />
-                </button>
-                <span className="absolute -bottom-5 left-1/2 -translate-x-1/2 text-xs text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100">
-                  Click to copy PowerShell command
-                </span>
-              </div>
-
-              <div className="mt-6 flex items-start gap-2 rounded-md bg-muted p-3 text-left text-sm text-muted-foreground drop-shadow-xs dark:border dark:border-accent dark:bg-muted/40 dark:drop-shadow-none">
-                <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                <p>
-                  Open Windows PowerShell as Administrator and paste the
-                  command. You can review the script anytime at{" "}
-                  <a
-                    className="text-primary"
-                    href="https://github.com/Parcoil/Sparkle/blob/main/debloatscript.ps1"
-                    target="_blank"
-                  >
-                    GitHub
-                  </a>
-                </p>
-              </div>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Sparkle v2.9.0+ debloats your PC with the same script
-              </p>
-              <img
-                src="/sparkledebloat.png"
-                alt="Sparkle Debloat Tool"
-                className="mt-6 w-sm max-w-full rounded-md border-2 border-primary transition-all duration-300 hover:scale-105 sm:max-w-[800px] dark:border-accent"
-              />
-              <p className="mt-4 text-sm text-muted-foreground">
-                This image may not be up to date.
-              </p>
-            </div>
-          </div>
-          <div className="flex justify-center mb-8 ">
-            <AdBanner />
-          </div>
-          <div className="mb-20">
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-[#0096ff] mb-8">
-              Installable Apps
-            </h2>
-            <p className="text-center text-muted-foreground mb-8">
-              Easily install popular apps with Sparkle
-            </p>
-            <div className="marquee-container relative overflow-hidden">
-              <div className="absolute left-0 top-0 bottom-0 w-20 bg-linear-to-r from-white to-transparent dark:from-background z-10 pointer-events-none"></div>
-
-              <div className="absolute right-0 top-0 bottom-0 w-20 bg-linear-to-l from-white to-transparent dark:from-background z-10 pointer-events-none"></div>
-              <div className="marquee-track">
-                {[...apps, ...apps]
-                  .sort(() => Math.random() - 0.5)
-                  .map((app, i) => (
-                    <Card
-                      key={i}
-                      className="w-[280px] shrink-0 hover:border-[#0096ff] transition-all duration-300"
-                    >
-                      <CardHeader className="pb-2">
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={app.icon}
-                            alt={app.name}
-                            className="w-8 h-8"
-                            height={8}
-                            width={8}
-                          />
-
-                          <CardTitle className="text-lg">{app.name}</CardTitle>
-                        </div>
-                      </CardHeader>
-
-                      <CardContent className="dark:text-gray-300 text-sm">
-                        <CardDescription>Type: {app.category}</CardDescription>
-                        <p>{app.info}</p>
-                        {app.link && (
-                          <a
-                            href={app.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center mt-2 text-blue-400 hover:underline"
-                          >
-                            <Globe className="w-4 h-4 mr-1" />
-                            Visit Site
-                          </a>
-                        )}
-                      </CardContent>
-                    </Card>
-                  ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center bg-linear-to-r from-[#0096ff]/10 to-[#0042ff]/10 p-8 rounded-xl border border-[#0096ff]/20 mb-10">
-            <h2 className="text-3xl font-bold mb-4 text-foreground">
-              Ready to Optimize Your Windows PC?
-            </h2>
-            <p className="mb-6 text-muted-foreground max-w-2xl mx-auto">
-              Download Sparkle and Debloat, Optimize, Clean your PC
-            </p>
-            {downloadUrl && (
-              <a
-                href={downloadUrl}
-                download={downloadName}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block animate-pulse-slow"
-                onClick={() => {
-                  posthog.capture("sparkle_download_button", {
-                    download_type: "exe",
-                    location: "bottom_cta",
-                  });
-                  sendGAEvent("event", "sparkle_download_button", {
-                    value: "bottom_cta_exe",
-                    app_version: version ?? "unknown",
-                  });
-                }}
-              >
-                <Button
-                  size="lg"
-                  className="bg-[#0096ff] hover:bg-blue-600 text-black shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  <Download className="mr-2 h-5 w-5" /> Get Sparkle Now
-                </Button>
-              </a>
-            )}
-          </div>
-
-          <p className="text-sm text-orange-400 mt-10 text-center font-medium">
-            ⚠️ Currently in Beta - Please report any issues on{" "}
-            <a
-              href="https://github.com/parcoil/sparkle"
-              className="text-blue-500"
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="mb-4"
+          >
+            <motion.h1
+              variants={fadeInUp}
+              transition={{ duration: 0.35 }}
+              className="mb-4 text-center text-4xl font-medium sm:text-5xl md:text-7xl"
             >
-              GitHub
-            </a>
-          </p>
+              Take control of your PC.
+            </motion.h1>
 
-          <div className="max-w-4xl mx-auto px-4 py-8">
-            <AdBanner />
+            <motion.p
+              variants={fadeInUp}
+              transition={{ duration: 0.35, delay: 0.06 }}
+              className="text-center text-base text-muted-foreground sm:text-lg"
+            >
+              Open-Source tool to optimize Windows and boost gaming performance
+              <br />
+              and enhance privacy.
+            </motion.p>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="mb-6 flex flex-col items-center space-y-2 text-center sm:flex-row sm:space-y-0 sm:space-x-8 sm:text-left"
+          >
+            <motion.div
+              variants={fadeInUp}
+              className="flex items-center space-x-2"
+            >
+              <p className="text-sm font-medium text-muted-foreground">
+                Latest Version{" "}
+                <motion.span
+                  key={version}
+                  initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="font-semibold text-primary"
+                >
+                  {version || "..."}
+                </motion.span>
+              </p>
+            </motion.div>
+            <motion.div
+              variants={fadeInUp}
+              className="flex items-center space-x-2"
+            >
+              <p className="text-sm font-medium text-muted-foreground">
+                Downloads{" "}
+                <motion.span
+                  key={downloads}
+                  initial={{ opacity: 0, scale: 0.5, y: 10 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 20,
+                    delay: 0.06,
+                  }}
+                  className="font-semibold text-primary"
+                >
+                  {downloads || "..."}
+                </motion.span>
+              </p>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="hidden w-full flex-col justify-center space-y-2 sm:flex sm:w-auto sm:flex-row sm:space-y-0 sm:space-x-4"
+          >
+            <motion.div
+              variants={fadeInUp}
+              transition={{ duration: 0.3, delay: 0.12 }}
+            >
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="w-full justify-center sm:w-auto">
+                    <Download className="mr-2 h-4 w-4" />
+                    Download
+                    <ChevronDown className="ml-2 h-4 w-4 opacity-50" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-full sm:w-56" align="start">
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem onClick={() => handleDownload("exe")}>
+                      <Download className="mr-2 h-4 w-4" />
+                      <span>Installer (.exe)</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => handleDownload("zip")}>
+                      <Download className="mr-2 h-4 w-4" />
+                      <span>Portable (.zip)</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.18 }}
+            className="mt-4 flex flex-col items-center justify-center space-y-2 px-4 text-center sm:hidden"
+          >
+            <p className="text-sm font-semibold text-primary">
+              Please visit this page on a Windows PC to download Sparkle
+            </p>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.24 }}
+            className="mt-4 text-sm text-muted-foreground select-none"
+          >
+            CLI Install:
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+          >
+            <CodeTabs
+              tabs={installMethods}
+              className="w-full sm:w-sm gap-0 mt-4 z-40!"
+            />
+          </motion.div>
+
+          <div className="relative w-full max-w-5xl flex flex-col items-center justify-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.36 }}
+              className="absolute inset-0 dark:bg-accent/20 bg-primary/30 blur-3xl rounded-full -z-10"
+            />
+            <motion.img
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.42 }}
+              whileHover={{ scale: 1.05 }}
+              src="/showcase.png"
+              alt="Sparkle app showcase"
+              className="mt-6 aspect-video w-full max-w-full rounded-md border-2 border-primary transition-all duration-300 sm:max-w-200 dark:border-accent relative z-10"
+            />
+          </div>
+
+          <div className="w-full py-12">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={fadeInUp}
+                transition={{ duration: 0.35 }}
+                className="text-center"
+              >
+                <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-4xl">
+                  Features
+                </h2>
+                <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
+                  Powerful Tweaks to optimize your Windows experience
+                </p>
+              </motion.div>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={staggerContainer}
+                className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+              >
+                {features.map((feature, index) => (
+                  <motion.div
+                    key={feature.title}
+                    variants={fadeInUp}
+                    transition={{ duration: 0.3, delay: index * 0.06 }}
+                  >
+                    <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-lg hover:ring-1 hover:ring-primary/20 h-full flex flex-col">
+                      <CardHeader className="pb-3">
+                        <motion.div
+                          transition={{ duration: 0.3 }}
+                          className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-accent/40 text-primary"
+                        >
+                          <feature.icon
+                            className={`h-5 w-5 ${feature.iconColor}`}
+                          />
+                        </motion.div>
+                        <div className="flex items-center gap-2">
+                          <CardTitle className="text-base font-semibold">
+                            {feature.title}
+                          </CardTitle>
+                        </div>
+                        <CardDescription className="mt-2 text-xs text-muted-foreground">
+                          {feature.description}
+                        </CardDescription>
+                      </CardHeader>
+                    </Card>
+                  </motion.div>
+                ))}
+              </motion.div>
+              <p className="text-center text-sm font-medium mt-3 mb-3 text-muted-foreground">
+                With more features in the app{" "}
+              </p>
+            </div>
+
+            <div className="flex justify-center">
+              <AdBanner />
+            </div>
+
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={fadeInUp}
+                transition={{ duration: 0.35 }}
+                className="text-center"
+              >
+                <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-4xl">
+                  FAQs
+                </h2>
+                <p className="mx-auto mt-4 max-w-2xl text-base text-muted-foreground sm:text-lg">
+                  Frequently Asked Questions
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={staggerContainer}
+              >
+                <Accordion type="single" className="mt-6 space-y-2" collapsible>
+                  {faqs.map((faq, index) => (
+                    <motion.div
+                      key={faq.question}
+                      variants={fadeInUp}
+                      transition={{ duration: 0.25, delay: index * 0.03 }}
+                    >
+                      <AccordionItem value={faq.question}>
+                        <AccordionTrigger>{faq.question}</AccordionTrigger>
+                        <AccordionContent className="text-muted-foreground">
+                          {faq.answer}
+                        </AccordionContent>
+                      </AccordionItem>
+                    </motion.div>
+                  ))}
+                </Accordion>
+              </motion.div>
+            </div>
+
+            <div className="flex justify-center">
+              <AdBanner />
+            </div>
+
+            <div className="flex justify-center">
+              <AdBanner />
+            </div>
           </div>
         </div>
       </div>
       <style>
         {`
-      :root {
-  --background: 208 100% 97.0588%;
-  --foreground: 210 50% 15.6863%;
-  --card: 0 0% 100%;
-  --card-foreground: 210 50% 15.6863%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 210 50% 15.6863%;
-  --primary: 204.9412 100% 50%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 213.3333 100% 91.1765%;
-  --secondary-foreground: 210 66.6667% 23.5294%;
-  --muted: 210 66.6667% 94.1176%;
-  --muted-foreground: 210 16.6667% 47.0588%;
-  --accent: 207.2727 100.0000% 89.2157%;
-  --accent-foreground: 210 50% 15.6863%;
-  --destructive: 350.1754 100% 66.4706%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 210 50% 88.2353%;
-  --input: 210 50% 88.2353%;
-  --ring: 204.9412 100% 50%;
-  --chart-1: 204.9412 100% 50%;
-  --chart-2: 210 100% 60%;
-  --chart-3: 210.1961 100.0000% 70%;
-  --chart-4: 210 100.0000% 80%;
-  --chart-5: 210 100% 40%;
-  --sidebar: 210 66.6667% 94.1176%;
-  --sidebar-foreground: 210 50% 15.6863%;
-  --sidebar-primary: 204.9412 100% 50%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 207.2727 100.0000% 89.2157%;
-  --sidebar-accent-foreground: 210 50% 15.6863%;
-  --sidebar-border: 210 50% 88.2353%;
-  --sidebar-ring: 204.9412 100% 50%;
+:root {
+  --background: oklch(0.9751 0.0127 244.2507);
+  --foreground: oklch(0.2705 0.0457 249.8541);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2705 0.0457 249.8541);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2705 0.0457 249.8541);
+  --primary: oklch(0.6602 0.1878 250.1786);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.9179 0.0403 254.0389);
+  --secondary-foreground: oklch(0.3503 0.0828 251.4412);
+  --muted: oklch(0.9506 0.0172 248.0089);
+  --muted-foreground: oklch(0.5639 0.039 248.5213);
+  --accent: oklch(0.9111 0.0467 243.3949);
+  --accent-foreground: oklch(0.2705 0.0457 249.8541);
+  --destructive: oklch(0.6861 0.2061 14.9941);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.903 0.0261 248.1176);
+  --input: oklch(0.903 0.0261 248.1176);
+  --ring: oklch(0.6602 0.1878 250.1786);
+  --chart-1: oklch(0.6602 0.1878 250.1786);
+  --chart-2: oklch(0.6755 0.1765 252.2592);
+  --chart-3: oklch(0.7469 0.1352 250.366);
+  --chart-4: oklch(0.828 0.0898 248.9586);
+  --chart-5: oklch(0.522 0.1771 255.8297);
+  --sidebar: oklch(0.9506 0.0172 248.0089);
+  --sidebar-foreground: oklch(0.2705 0.0457 249.8541);
+  --sidebar-primary: oklch(0.6602 0.1878 250.1786);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.9111 0.0467 243.3949);
+  --sidebar-accent-foreground: oklch(0.2705 0.0457 249.8541);
+  --sidebar-border: oklch(0.903 0.0261 248.1176);
+  --sidebar-ring: oklch(0.6602 0.1878 250.1786);
   --font-sans: Poppins, sans-serif;
   --font-serif: Poppins, ui-sans-serif, sans-serif, system-ui;
   --font-mono: Fira Code, ui-monospace, monospace;
   --radius: 0.675rem;
-  --shadow-x: 0;
-  --shadow-y: 1px;
-  --shadow-blur: 3px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.1;
-  --shadow-color: oklch(0 0 0);
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
-  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
-  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+  --shadow-2xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
+  --shadow-xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
+  --shadow-sm: 0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 1px 2px -1px hsl(240 30% 25% / 0.12);
+  --shadow: 0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 1px 2px -1px hsl(240 30% 25% / 0.12);
+  --shadow-md: 0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 2px 4px -1px hsl(240 30% 25% / 0.12);
+  --shadow-lg: 0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 4px 6px -1px hsl(240 30% 25% / 0.12);
+  --shadow-xl: 0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 8px 10px -1px hsl(240 30% 25% / 0.12);
+  --shadow-2xl: 0px 4px 10px 0px hsl(240 30% 25% / 0.3);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 }
 
-.dark {
-  --background: 214.2857 36.8421% 7.4510%;
-  --foreground: 216 55.5556% 91.1765%;
-  --card: 215 35.2941% 13.3333%;
-  --card-foreground: 216 55.5556% 91.1765%;
-  --popover: 215 35.2941% 13.3333%;
-  --popover-foreground: 216 55.5556% 91.1765%;
-  --primary: 204.9412 100% 50%;
-  --primary-foreground: 214.2857 36.8421% 7.4510%;
-  --secondary: 210 40% 19.6078%;
-  --secondary-foreground: 210 66.6667% 82.3529%;
-  --muted: 217.5000 36.3636% 17.2549%;
-  --muted-foreground: 210.0000 19.0476% 58.8235%;
-  --accent: 212.7273 44% 24.5098%;
-  --accent-foreground: 216 55.5556% 91.1765%;
-  --destructive: 350.1754 100% 66.4706%;
-  --destructive-foreground: 0 0% 100%;
-  --border: 216.6667 39.1304% 18.0392%;
-  --input: 216 38.4615% 25.4902%;
-  --ring: 204.9412 100% 50%;
-  --chart-1: 204.9412 100% 50%;
-  --chart-2: 204 100% 50%;
-  --chart-3: 210 100% 60%;
-  --chart-4: 210.1961 100.0000% 70%;
-  --chart-5: 210 100.0000% 80%;
-  --sidebar: 215 35.2941% 13.3333%;
-  --sidebar-foreground: 216 55.5556% 91.1765%;
-  --sidebar-primary: 204.9412 100% 50%;
-  --sidebar-primary-foreground: 214.2857 36.8421% 7.4510%;
-  --sidebar-accent: 212.7273 44% 24.5098%;
-  --sidebar-accent-foreground: 216 55.5556% 91.1765%;
-  --sidebar-border: 216 38.4615% 25.4902%;
-  --sidebar-ring: 204.9412 100% 50%;
+.dark, .oled {
+  --background: oklch(0.1801 0.0191 255.7673);
+  --foreground: oklch(0.9219 0.0231 258.3605);
+  --card: oklch(0.241 0.0306 256.8678);
+  --card-foreground: oklch(0.9219 0.0231 258.3605);
+  --popover: oklch(0.241 0.0306 256.8678);
+  --popover-foreground: oklch(0.9219 0.0231 258.3605);
+  --primary: oklch(0.6602 0.1878 250.1786);
+  --primary-foreground: oklch(0.1801 0.0191 255.7673);
+  --secondary: oklch(0.31 0.0445 249.4384);
+  --secondary-foreground: oklch(0.8516 0.0529 248.4481);
+  --muted: oklch(0.2759 0.0409 260.3189);
+  --muted-foreground: oklch(0.6643 0.0375 248.3916);
+  --accent: oklch(0.3509 0.0612 253.8448);
+  --accent-foreground: oklch(0.9219 0.0231 258.3605);
+  --destructive: oklch(0.6861 0.2061 14.9941);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.2836 0.0451 259.1754);
+  --input: oklch(0.354 0.0586 258.2773);
+  --ring: oklch(0.6602 0.1878 250.1786);
+  --chart-1: oklch(0.6602 0.1878 250.1786);
+  --chart-2: oklch(0.669 0.1837 248.8066);
+  --chart-3: oklch(0.6755 0.1765 252.2592);
+  --chart-4: oklch(0.7469 0.1352 250.366);
+  --chart-5: oklch(0.828 0.0898 248.9586);
+  --sidebar: oklch(0.241 0.0306 256.8678);
+  --sidebar-foreground: oklch(0.9219 0.0231 258.3605);
+  --sidebar-primary: oklch(0.6602 0.1878 250.1786);
+  --sidebar-primary-foreground: oklch(0.1801 0.0191 255.7673);
+  --sidebar-accent: oklch(0.3509 0.0612 253.8448);
+  --sidebar-accent-foreground: oklch(0.9219 0.0231 258.3605);
+  --sidebar-border: oklch(0.354 0.0586 258.2773);
+  --sidebar-ring: oklch(0.6602 0.1878 250.1786);
   --font-sans: Poppins, sans-serif;
   --font-serif: Poppins, ui-sans-serif, sans-serif, system-ui;
   --font-mono: Fira Code, ui-monospace, monospace;
   --radius: 0.675rem;
-  --shadow-x: 0;
-  --shadow-y: 1px;
-  --shadow-blur: 3px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.1;
-  --shadow-color: oklch(0 0 0);
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
-  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
-  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
-  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+  --shadow-2xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
+  --shadow-xs: 0px 4px 10px 0px hsl(240 30% 25% / 0.06);
+  --shadow-sm: 0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 1px 2px -1px hsl(240 30% 25% / 0.12);
+  --shadow: 0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 1px 2px -1px hsl(240 30% 25% / 0.12);
+  --shadow-md: 0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 2px 4px -1px hsl(240 30% 25% / 0.12);
+  --shadow-lg: 0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 4px 6px -1px hsl(240 30% 25% / 0.12);
+  --shadow-xl: 0px 4px 10px 0px hsl(240 30% 25% / 0.12), 0px 8px 10px -1px hsl(240 30% 25% / 0.12);
+  --shadow-2xl: 0px 4px 10px 0px hsl(240 30% 25% / 0.3);
 }
         `}
       </style>
