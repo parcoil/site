@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "motion/react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import AdBanner from "@/components/AdBanner";
@@ -332,23 +331,7 @@ export default function DotlineClient() {
               </Link>
             </div>
           </div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.18 }}
-            className="mt-4 flex flex-col items-center justify-center space-y-2 px-4 text-center"
-          >
-            <p className="text-sm font-semibold text-red-500">
-              Our Servers are currently having some issues. If downloads dont
-              work please use{" "}
-              <a
-                href="https://github.com/thedogecraft/dotline"
-                className="underline"
-              >
-                GitHub
-              </a>
-            </p>
-          </motion.div>
+
           <div className="flex justify-center mb-8 mt-8">
             <AdBanner />
           </div>
