@@ -1,4 +1,4 @@
-import { Poppins } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeProvider } from "next-themes";
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "Parcoil, Lunaar, Starlight, Sparkle, Windows Utility, unblocked games, open source, optimizer, debloater, windows tweaks, windows tweaker, vtrl, hone",
   robots: "index, follow",
 };
-const poppins = Poppins({
+const poppins = Plus_Jakarta_Sans({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
@@ -76,9 +76,17 @@ export default function RootLayout({ children }) {
         >
           <Toaster richColors />
           <Navbar />
-          <BannerAd adKey="792739fe386cbc9cf97f00d8858703f6" width={468} height={60} />
+          <BannerAd
+            adKey="792739fe386cbc9cf97f00d8858703f6"
+            width={468}
+            height={60}
+          />
           <main className="grow flex flex-col">{children}</main>
-          <BannerAd adKey="6f03a53b58ea2b76ea16b97726173a12" width={728} height={90} />
+          <BannerAd
+            adKey="6f03a53b58ea2b76ea16b97726173a12"
+            width={728}
+            height={90}
+          />
           <Footer />
         </ThemeProvider>
       </body>
