@@ -36,8 +36,7 @@ function Navbar() {
               href={"/"}
             >
               {/* <Image src="/parcoil.png" alt="Parcoil" width="50" height="50" /> */}
-              <Logo className="w-[50px] h-[50px] text-primary" />
-              Parcoil
+              <Logo className="w-12.5 h-12.5 text-primary" />
             </Link>
           </div>
 

@@ -106,7 +106,7 @@ function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t text-center text-sm text-muted-foreground">
-          &copy; {year} Parcoil. All rights reserved.
+          &copy; {year} Parcoil
         </div>
       </div>
     </footer>
