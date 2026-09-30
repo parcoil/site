@@ -1,64 +1,104 @@
 "use client";
-import React from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useMemo, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
+import ToolCard from "@/components/tools/ToolCard";
+import { Stat, StatGrid } from "@/components/tools/stats";
 
-function WordCounter() {
-  const [text, setText] = React.useState("");
+const STOP_WORDS = new Set(
+  "a an and are as at be but by for from has have he her his i in is it its of on or our she so that the their them they this to was we were will with you your not do does did can could would should than then there these those what when which who how all any if into about just also more most very".split(
+    " ",
+  ),
+);
 
-  const wordCount = text.trim() === "" ? 0 : text.trim().split(/\s+/).length;
-  const charCount = text.length;
-  const charCountNoSpaces = text.replace(/\s/g, "").length;
-  const lineCount = text.split("\n").length;
+const wordSegmenter =
+  typeof Intl !== "undefined" && "Segmenter" in Intl
+    ? new Intl.Segmenter(undefined, { granularity: "word" })
+    : null;
+const sentenceSegmenter =
+  typeof Intl !== "undefined" && "Segmenter" in Intl
+    ? new Intl.Segmenter(undefined, { granularity: "sentence" })
+    : null;
 
-  return (
-    <div>
-      <Card>
-        <CardHeader>
-          <h1 className="text-2xl font-bold">Word Counter</h1>
-          <p>Count words, characters, and lines in your text</p>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col gap-4">
-            <Textarea
-              placeholder="Enter your text here..."
-              onChange={(e) => setText(e.target.value)}
-              value={text}
-              className="min-h-32"
-            />
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="text-center p-4 dark:bg-accent/50 bg-accent rounded-lg border dark:border-primary/20 border-secondary">
-                <div className="text-2xl font-bold text-blue-600">
-                  {wordCount}
-                </div>
-                <div className="text-sm text-accent-foreground">Words</div>
-              </div>
-              <div className="text-center p-4 dark:bg-accent/50 bg-accent rounded-lg border dark:border-primary/20 border-secondary">
-                <div className="text-2xl font-bold text-green-600">
-                  {charCount}
-                </div>
-                <div className="text-sm text-accent-foreground">Characters</div>
-              </div>
-              <div className="text-center p-4 dark:bg-accent/50 bg-accent rounded-lg border dark:border-primary/20 border-secondary">
-                <div className="text-2xl font-bold text-primary">
-                  {charCountNoSpaces}
-                </div>
-                <div className="text-sm text-accent-foreground">
-                  Characters (no spaces)
-                </div>
-              </div>
-              <div className="text-center p-4 dark:bg-accent/50 bg-accent rounded-lg border dark:border-primary/20 border-secondary">
-                <div className="text-2xl font-bold text-orange-600">
-                  {lineCount}
-                </div>
-                <div className="text-sm text-accent-foreground">Lines</div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
+function getWords(text: string) {
+  if (!wordSegmenter) return text.match(/[\p{L}\p{N}'’-]+/gu) ?? [];
+  return Array.from(wordSegmenter.segment(text))
+    .filter((s) => s.isWordLike)
+    .map((s) => s.segment);
 }
 
-export default WordCounter;
+function countSentences(text: string) {
+  if (!text.trim()) return 0;
+  if (!sentenceSegmenter) return text.split(/[.!?]+\s/).filter((s) => s.trim()).length;
+  return Array.from(sentenceSegmenter.segment(text)).filter((s) => s.segment.trim()).length;
+}
+
+function formatDuration(minutes: number) {
+  if (minutes === 0) return "0 sec";
+  const seconds = Math.max(1, Math.round(minutes * 60));
+  return seconds < 60 ? `${seconds} sec` : `${Math.floor(seconds / 60)} min ${seconds % 60} sec`;
+}
+
+export default function WordCounter() {
+  const [text, setText] = useState("");
+
+  const stats = useMemo(() => {
+    const words = getWords(text);
+    const frequencies = new Map<string, number>();
+    for (const word of words) {
+      const key = word.toLowerCase();
+      if (key.length > 2 && !STOP_WORDS.has(key) && !/^\d+$/.test(key)) {
+        frequencies.set(key, (frequencies.get(key) ?? 0) + 1);
+      }
+    }
+    return {
+      words: words.length,
+      characters: Array.from(text).length,
+      charactersNoSpaces: Array.from(text.replace(/\s/g, "")).length,
+      sentences: countSentences(text),
+      paragraphs: text.split(/\n\s*\n/).filter((p) => p.trim()).length,
+      lines: text ? text.split("\n").length : 0,
+      reading: formatDuration(words.length / 238),
+      speaking: formatDuration(words.length / 150),
+      keywords: [...frequencies.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8),
+    };
+  }, [text]);
+
+  return (
+    <ToolCard>
+      <Textarea
+        aria-label="Text to count"
+        placeholder="Start typing or paste your text here…"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        className="min-h-56"
+      />
+
+      <StatGrid>
+        <Stat label="Words" value={stats.words.toLocaleString()} />
+        <Stat label="Characters" value={stats.characters.toLocaleString()} />
+        <Stat label="Characters (no spaces)" value={stats.charactersNoSpaces.toLocaleString()} />
+        <Stat label="Sentences" value={stats.sentences.toLocaleString()} />
+        <Stat label="Paragraphs" value={stats.paragraphs.toLocaleString()} />
+        <Stat label="Lines" value={stats.lines.toLocaleString()} />
+        <Stat label="Reading time" value={stats.reading} />
+        <Stat label="Speaking time" value={stats.speaking} />
+      </StatGrid>
+
+      {stats.keywords.length > 0 && (
+        <div className="space-y-2">
+          <h2 className="text-sm font-medium">Keyword density</h2>
+          <div className="flex flex-wrap gap-2">
+            {stats.keywords.map(([word, count]) => (
+              <span key={word} className="rounded-full border bg-muted/30 px-3 py-1 text-sm">
+                {word}{" "}
+                <span className="text-muted-foreground">
+                  {count} · {((count / stats.words) * 100).toFixed(1)}%
+                </span>
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+    </ToolCard>
+  );
+}

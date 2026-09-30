@@ -1,78 +1,153 @@
 "use client";
-import React from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { CircleCheck } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import FileDropzone from "@/components/tools/FileDropzone";
+import FileInfoBar from "@/components/tools/FileInfoBar";
+import OutputField from "@/components/tools/OutputField";
+import ToolCard from "@/components/tools/ToolCard";
+import { Field, OptionPicker, SwitchField } from "@/components/tools/fields";
+import { bytesToHex, utf8Encode } from "@/lib/encoding";
+import { md5 } from "@/lib/md5";
 
-async function hashString(message: string, algorithm: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(message);
-  const hashBuffer = await crypto.subtle.digest(algorithm, data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+const ALGORITHMS = ["MD5", "SHA-1", "SHA-256", "SHA-384", "SHA-512"] as const;
+type Algorithm = (typeof ALGORITHMS)[number];
+type Hashes = Partial<Record<Algorithm, string>>;
+
+async function hashAll(bytes: Uint8Array): Promise<Hashes> {
+  const entries = await Promise.all(
+    ALGORITHMS.map(async (algorithm) => {
+      const digest =
+        algorithm === "MD5"
+          ? md5(bytes)
+          : new Uint8Array(await crypto.subtle.digest(algorithm, bytes as BufferSource));
+      return [algorithm, bytesToHex(digest)] as const;
+    }),
+  );
+  return Object.fromEntries(entries);
 }
 
-function HashGenerator() {
-  const [input, setInput] = React.useState("");
-  const [output, setOutput] = React.useState("");
-  const [algorithm, setAlgorithm] = React.useState("SHA-256");
+export default function HashGenerator() {
+  const [source, setSource] = useState<"text" | "file">("text");
+  const [text, setText] = useState("");
+  const [file, setFile] = useState<File | null>(null);
+  const [hashes, setHashes] = useState<Hashes>({});
+  const [busy, setBusy] = useState(false);
+  const [uppercase, setUppercase] = useState(false);
+  const [expected, setExpected] = useState("");
 
-  const handleGenerate = async () => {
-    if (!input) return;
-    try {
-      const hash = await hashString(input, algorithm.replace('-', ''));
-      setOutput(hash);
-    } catch (error) {
-      setOutput("Error generating hash");
-    }
-  };
+  useEffect(() => {
+    let cancelled = false;
+    const run = async () => {
+      if (source === "text" ? !text : !file) {
+        setHashes({});
+        setBusy(false);
+        return;
+      }
+      setBusy(true);
+      const bytes =
+        source === "text" ? utf8Encode(text) : new Uint8Array(await file!.arrayBuffer());
+      const result = await hashAll(bytes);
+      if (!cancelled) {
+        setHashes(result);
+        setBusy(false);
+      }
+    };
+    run();
+    return () => {
+      cancelled = true;
+    };
+  }, [source, text, file]);
+
+  const normalizedExpected = expected.trim().toLowerCase();
+  const match = normalizedExpected
+    ? ALGORITHMS.find((a) => hashes[a] === normalizedExpected)
+    : undefined;
 
   return (
-    <div>
-      <Card>
-        <CardHeader>
-          <h1 className="text-2xl font-bold">Hash Generator</h1>
-          <p>Generate cryptographic hashes from text</p>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col gap-4">
-            <Textarea
-              placeholder="Enter text to hash"
-              onChange={(e) => setInput(e.target.value)}
-              value={input}
+    <ToolCard>
+      <OptionPicker
+        aria-label="Input source"
+        value={source}
+        onChange={setSource}
+        options={[
+          { value: "text", label: "Text" },
+          { value: "file", label: "File" },
+        ]}
+      />
+
+      {source === "text" ? (
+        <Field label="Text to hash" htmlFor="hash-text">
+          <Textarea
+            id="hash-text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Type or paste text…"
+            className="min-h-32"
+          />
+        </Field>
+      ) : file ? (
+        <FileInfoBar file={file} onClear={() => setFile(null)} />
+      ) : (
+        <FileDropzone
+          onFiles={([f]) => setFile(f)}
+          label="Drop a file to calculate its checksum"
+          hint="Any file type. The file is read locally and never uploaded."
+        />
+      )}
+
+      <SwitchField
+        className="max-w-xs"
+        label="Uppercase output"
+        checked={uppercase}
+        onChange={setUppercase}
+      />
+
+      <div className="space-y-4">
+        {ALGORITHMS.map((algorithm) => {
+          const value = hashes[algorithm] ?? "";
+          return (
+            <OutputField
+              key={algorithm}
+              mono
+              label={
+                <span className="flex items-center gap-2">
+                  {algorithm}
+                  {match === algorithm && (
+                    <span className="flex items-center gap-1 text-green-600 dark:text-green-400">
+                      <CircleCheck className="h-4 w-4" /> Matches
+                    </span>
+                  )}
+                </span>
+              }
+              value={uppercase ? value.toUpperCase() : value}
+              placeholder={busy ? "Hashing…" : ""}
+              inputClassName={match === algorithm ? "border-green-500" : undefined}
             />
-            <div className="flex gap-4 items-center">
-              <Select value={algorithm} onValueChange={setAlgorithm}>
-                <SelectTrigger className="w-48">
-                  <SelectValue placeholder="Select algorithm" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="SHA-256">SHA-256</SelectItem>
-                  <SelectItem value="SHA-384">SHA-384</SelectItem>
-                  <SelectItem value="SHA-512">SHA-512</SelectItem>
-                  <SelectItem value="SHA-1">SHA-1</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button onClick={handleGenerate}>Generate Hash</Button>
-            </div>
-            <Textarea
-              placeholder="Hash result"
-              value={output}
-              readOnly
-              className="font-mono text-sm"
-            />
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+          );
+        })}
+      </div>
+
+      <Field
+        label="Verify a checksum"
+        htmlFor="expected-hash"
+        hint={
+          normalizedExpected
+            ? match
+              ? `Match found: this is the ${match} hash.`
+              : "No match against any of the hashes above."
+            : "Paste a published hash to check a download hasn't been tampered with."
+        }
+      >
+        <Input
+          id="expected-hash"
+          value={expected}
+          onChange={(e) => setExpected(e.target.value)}
+          placeholder="e.g. 9f86d081884c7d659a2feaa0c55ad015…"
+          className="font-mono"
+        />
+      </Field>
+    </ToolCard>
   );
 }
-
-export default HashGenerator;

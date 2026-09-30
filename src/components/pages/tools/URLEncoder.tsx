@@ -1,53 +1,52 @@
 "use client";
-import React from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import TextTransformer from "@/components/tools/TextTransformer";
+import { SwitchField } from "@/components/tools/fields";
 
-function URLEncoder() {
-  const [input, setInput] = React.useState("");
-  const [output, setOutput] = React.useState("");
-
-  const handleEncode = () => {
-    try {
-      setOutput(encodeURIComponent(input));
-    } catch (error) {
-      setOutput("Error encoding URL");
-    }
-  };
-
-  const handleDecode = () => {
-    try {
-      setOutput(decodeURIComponent(input));
-    } catch (error) {
-      setOutput("Error decoding URL");
-    }
-  };
-
-  return (
-    <div>
-      <Card>
-        <CardHeader>
-          <h1 className="text-2xl font-bold">URL Encoder/Decoder</h1>
-          <p>Encode or decode URLs for safe transmission</p>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col gap-4">
-            <Textarea
-              placeholder="Enter URL to encode/decode"
-              onChange={(e) => setInput(e.target.value)}
-              value={input}
-            />
-            <div className="flex gap-4">
-              <Button onClick={handleEncode}>Encode</Button>
-              <Button onClick={handleDecode}>Decode</Button>
-            </div>
-            <Textarea placeholder="Result" value={output} readOnly />
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
+function decode(input: string, plusAsSpace: boolean) {
+  try {
+    return decodeURIComponent(plusAsSpace ? input.replace(/\+/g, " ") : input);
+  } catch {
+    throw new Error("This contains an invalid percent-encoded sequence.");
+  }
 }
 
-export default URLEncoder;
+export default function URLEncoder() {
+  const [fullUrl, setFullUrl] = useState(false);
+  const [plusAsSpace, setPlusAsSpace] = useState(true);
+  const [mode, setMode] = useState("encode");
+
+  return (
+    <TextTransformer
+      mode={mode}
+      onModeChange={setMode}
+      modes={[
+        {
+          value: "encode",
+          label: "Encode",
+          run: (text) => (fullUrl ? encodeURI(text) : encodeURIComponent(text)),
+        },
+        { value: "decode", label: "Decode", run: (text) => decode(text, plusAsSpace) },
+      ]}
+      options={
+        mode === "encode" ? (
+          <SwitchField
+            className="max-w-md"
+            label="Encode as a full URL"
+            description="Keep characters like : / ? & = intact. Turn off to encode a single query value."
+            checked={fullUrl}
+            onChange={setFullUrl}
+          />
+        ) : (
+          <SwitchField
+            className="max-w-md"
+            label="Treat + as a space"
+            description="Form submissions encode spaces as +."
+            checked={plusAsSpace}
+            onChange={setPlusAsSpace}
+          />
+        )
+      }
+    />
+  );
+}

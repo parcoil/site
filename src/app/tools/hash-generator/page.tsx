@@ -1,75 +1,43 @@
 import HashGenerator from "@/components/pages/tools/HashGenerator";
-import AdBanner from "@/components/AdBanner";
-import BannerAd from "@/components/BannerAd";
+import ToolPage from "@/components/tools/ToolPage";
+import { toolMetadata } from "@/lib/tools";
 
-export const metadata = {
-  title: "Hash Generator Tool | Generate MD5, SHA-1, SHA-256, SHA-384, SHA-512 Hashes",
-  description:
-    "Free online hash generator for MD5, SHA-1, SHA-256, SHA-384, and SHA-512. Generate cryptographic hashes from text securely.",
-  keywords: [
-    "hash generator",
-    "md5 hash",
-    "sha1 hash",
-    "sha256 hash",
-    "sha384 hash",
-    "sha512 hash",
-    "cryptographic hash",
-    "online hash tool",
-  ],
-  openGraph: {
-    title: "Hash Generator Tool",
-    description: "Free online hash generator for various cryptographic algorithms.",
-    type: "website",
-    locale: "en_US",
-  },
-};
+export const metadata = toolMetadata("hash-generator");
 
-export default function HashGeneratorPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen flex flex-col py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-3">
-          Hash Generator
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Generate cryptographic hashes using various algorithms including SHA-256,
-          SHA-384, SHA-512, and SHA-1. All hashing is done securely in your browser.
-        </p>
-      </div>
-
-      <main>
-        <HashGenerator />
-      </main>
-
-      <section className="py-8 px-4 mt-6">
-        <AdBanner />
-      </section>
-
-      <section className="mt-8 prose dark:prose-invert max-w-none">
-        <h2 className="text-2xl font-semibold mb-4">About Cryptographic Hashing</h2>
-        <p>
-          Cryptographic hash functions are mathematical algorithms that map data of
-          arbitrary size to a fixed-size string of characters. They're designed to be
-          one-way functions, meaning it's computationally infeasible to reverse the
-          process.
-        </p>
-        <h2 className="text-2xl font-semibold mt-6 mb-4">Common Uses</h2>
-        <ul>
-          <li>Password storage and verification</li>
-          <li>Data integrity checking</li>
-          <li>Digital signatures</li>
-          <li>Blockchain and cryptocurrency</li>
-          <li>File integrity verification</li>
-        </ul>
-      </section>
-
-      <section className="py-8 px-4 mt-8">
-        <AdBanner />
-      </section>
-
-      <section className="py-8 px-4 flex justify-center">
-        <BannerAd adKey="fd31f3a208951023a4608886cfeb1c42" width={300} height={250} />
-      </section>
-    </main>
+    <ToolPage
+      slug="hash-generator"
+      about={
+        <>
+          <h2>About Cryptographic Hashing</h2>
+          <p>
+            Cryptographic hash functions are mathematical algorithms that map data of arbitrary
+            size to a fixed-size string of characters. They&apos;re designed to be one-way
+            functions, meaning it&apos;s computationally infeasible to reverse the process.
+          </p>
+          <h2>Which Algorithm Should I Use?</h2>
+          <ul>
+            <li><strong>SHA-256</strong> - The modern default for checksums, signatures and blockchains</li>
+            <li><strong>SHA-384 / SHA-512</strong> - Longer digests from the same SHA-2 family</li>
+            <li><strong>SHA-1</strong> - Legacy; still seen in Git, but no longer collision-resistant</li>
+            <li><strong>MD5</strong> - Fast and common for file checksums, but broken for security use</li>
+          </ul>
+          <p>
+            Never store passwords with plain hashes like these. Use a slow password hashing
+            algorithm such as Argon2, bcrypt or scrypt instead.
+          </p>
+          <h2>Common Uses</h2>
+          <ul>
+            <li>Verifying downloads against a published checksum</li>
+            <li>Data integrity checking</li>
+            <li>Digital signatures</li>
+            <li>Detecting duplicate files</li>
+          </ul>
+        </>
+      }
+    >
+      <HashGenerator />
+    </ToolPage>
   );
 }

@@ -1,174 +1,147 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Maximize } from "lucide-react";
 import posthog from "posthog-js";
+import { Button } from "@/components/ui/button";
+import ToolCard from "@/components/tools/ToolCard";
+import { SwitchField } from "@/components/tools/fields";
 
-function Pixel() {
-  const colors = [
-    { name: "Red", class: "bg-red-600" },
-    { name: "Blue", class: "bg-blue-600" },
-    { name: "Green", class: "bg-green-600" },
-    { name: "Yellow", class: "bg-yellow-400" },
-    { name: "White", class: "bg-white" },
-    { name: "Black", class: "bg-black" },
-  ];
+const COLORS = [
+  { name: "Black", value: "#000000" },
+  { name: "White", value: "#ffffff" },
+  { name: "Red", value: "#ff0000" },
+  { name: "Green", value: "#00ff00" },
+  { name: "Blue", value: "#0000ff" },
+  { name: "Cyan", value: "#00ffff" },
+  { name: "Magenta", value: "#ff00ff" },
+  { name: "Yellow", value: "#ffff00" },
+  { name: "Gray", value: "#808080" },
+];
 
-  const [currentColorIndex, setCurrentColorIndex] = useState(-1);
-  const [previousColorIndex, setPreviousColorIndex] = useState(-1);
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const [testStarted, setTestStarted] = useState(false);
+export default function Pixel() {
+  const [index, setIndex] = useState<number | null>(null);
+  const [auto, setAuto] = useState(false);
+  const [showHint, setShowHint] = useState(true);
+  const enteredFullscreen = useRef(false);
+  const hintTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const running = index !== null;
 
-  const enterFullScreen = () => {
-    const elem = document.documentElement;
+  const step = useCallback(
+    (delta: number) =>
+      setIndex((i) => (i === null ? i : (i + delta + COLORS.length) % COLORS.length)),
+    [],
+  );
 
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if ((elem as any).webkitRequestFullscreen) {
-      (elem as any).webkitRequestFullscreen();
-    } else if ((elem as any).msRequestFullscreen) {
-      (elem as any).msRequestFullscreen();
-    }
+  const stop = useCallback(() => {
+    setIndex(null);
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  }, []);
 
-    setIsFullScreen(true);
-  };
-
-  const exitFullScreen = () => {
-    if (document.exitFullscreen) {
-      document.exitFullscreen().catch(() => {
-        if ((document as any).webkitExitFullscreen) {
-          (document as any).webkitExitFullscreen();
-        } else if ((document as any).msExitFullscreen) {
-          (document as any).msExitFullscreen();
-        }
-      });
-    }
-
-    setIsFullScreen(false);
-  };
-
-  const startTest = () => {
-    setTestStarted(true);
-    setCurrentColorIndex(0);
-    setPreviousColorIndex(-1);
-    if (!isFullScreen) {
-      enterFullScreen();
-    }
+  const start = () => {
+    setIndex(0);
+    enteredFullscreen.current = false;
+    document.documentElement
+      .requestFullscreen?.()
+      .then(() => (enteredFullscreen.current = true))
+      .catch(() => {});
     posthog.capture("pixel_test_started");
   };
 
-  const handleLeftClick = () => {
-    if (!testStarted) return;
-
-    setPreviousColorIndex(currentColorIndex);
-    const nextIndex = (currentColorIndex + 1) % colors.length;
-    setCurrentColorIndex(nextIndex);
-  };
-
-  const handleRightClick = (e) => {
-    e.preventDefault();
-    if (!testStarted || previousColorIndex === -1) return;
-
-    setCurrentColorIndex(previousColorIndex);
-    setPreviousColorIndex(-1);
-  };
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape" && testStarted) {
-        setTestStarted(false);
-        exitFullScreen();
-      } else if (e.key === "f" && testStarted) {
-        isFullScreen ? exitFullScreen() : enterFullScreen();
-      } else if (e.key === "ArrowRight" && testStarted) {
-        handleLeftClick();
-      } else if (e.key === "ArrowLeft" && testStarted) {
-        handleRightClick(new MouseEvent("contextmenu"));
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [testStarted, isFullScreen, currentColorIndex, previousColorIndex]);
-
-  useEffect(() => {
-    const handleFullScreenChange = () => {
-      setIsFullScreen(
-        document.fullscreenElement ||
-          (document as any).webkitFullscreenElement ||
-          (document as any).msFullscreenElement
-      );
-    };
-
-    document.addEventListener("fullscreenchange", handleFullScreenChange);
-    document.addEventListener("webkitfullscreenchange", handleFullScreenChange);
-    document.addEventListener("msfullscreenchange", handleFullScreenChange);
-
-    return () => {
-      document.removeEventListener("fullscreenchange", handleFullScreenChange);
-      document.removeEventListener(
-        "webkitfullscreenchange",
-        handleFullScreenChange
-      );
-      document.removeEventListener(
-        "msfullscreenchange",
-        handleFullScreenChange
-      );
-    };
+  const revealHint = useCallback(() => {
+    setShowHint(true);
+    clearTimeout(hintTimer.current);
+    hintTimer.current = setTimeout(() => setShowHint(false), 2500);
   }, []);
 
   useEffect(() => {
-    if (!isFullScreen && testStarted) {
-      setTestStarted(false);
-    }
-  }, [isFullScreen]);
+    if (!running) return;
+    revealHint();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") stop();
+      else if (e.key === "ArrowRight" || e.key === " ") step(1);
+      else if (e.key === "ArrowLeft") step(-1);
+      else if (e.key.toLowerCase() === "a") setAuto((a) => !a);
+      else if (e.key.toLowerCase() === "f") {
+        if (document.fullscreenElement) document.exitFullscreen();
+        else document.documentElement.requestFullscreen?.();
+        return;
+      } else return;
+      e.preventDefault();
+    };
+    // Leaving fullscreen with the browser's own controls ends the test.
+    const onFullscreenChange = () => {
+      if (document.fullscreenElement) enteredFullscreen.current = true;
+      else if (enteredFullscreen.current) setIndex(null);
+    };
+    window.addEventListener("keydown", onKey);
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.removeEventListener("fullscreenchange", onFullscreenChange);
+      clearTimeout(hintTimer.current);
+    };
+  }, [running, step, stop, revealHint]);
+
+  useEffect(() => {
+    if (!running || !auto) return;
+    const id = setInterval(() => step(1), 2000);
+    return () => clearInterval(id);
+  }, [running, auto, step]);
+
+  if (running) {
+    const color = COLORS[index];
+    return (
+      <div
+        className="fixed inset-0 z-[100] cursor-none select-none"
+        style={{ backgroundColor: color.value }}
+        onClick={() => step(1)}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          step(-1);
+        }}
+        onMouseMove={revealHint}
+      >
+        <div
+          className={`absolute inset-x-0 bottom-6 flex justify-center transition-opacity duration-500 ${showHint ? "opacity-100" : "opacity-0"}`}
+        >
+          <p className="rounded-lg bg-black/60 px-4 py-2 text-sm text-white">
+            {color.name} · Click / → next · Right-click / ← previous · A auto-cycle
+            {auto ? " (on)" : ""} · F fullscreen · Esc exit
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <>
-      {!testStarted ? (
-        <div className="min-h-screen flex flex-col items-center justify-center gap-6">
-          <h1 className="text-2xl font-bold">Monitor Pixel Tester</h1>
-          <p className="text-center max-w-md">
-            Test your monitor by cycling through various colors to check for
-            dead pixels or color issues.
-          </p>
-          <div className="flex gap-2">
-            <Button onClick={startTest} className="px-6">
-              Start Pixel Test
-            </Button>
-          </div>
-          <div className="mt-4 text-sm text-gray-600">
-            <p>
-              <strong>Controls:</strong>
-            </p>
-            <ul className="list-disc pl-6">
-              <li>Left Click: Next color</li>
-              <li>Right Click: Previous color</li>
-              <li>ESC: Exit test</li>
-              <li>F: Toggle fullscreen</li>
-            </ul>
-          </div>
-        </div>
-      ) : (
-        <div
-          className={`w-full h-screen flex items-center justify-center ${
-            currentColorIndex >= 0 ? colors[currentColorIndex].class : ""
-          }`}
-          onClick={handleLeftClick}
-          onContextMenu={handleRightClick}
-        >
-          <div className="absolute top-4 left-4 text-lg bg-black bg-opacity-25 text-white p-2 rounded">
-            {currentColorIndex >= 0 ? colors[currentColorIndex].name : ""}
-          </div>
-          <p className="absolute bottom-4 text-center w-full bg-black bg-opacity-25 text-white p-2">
-            Left Click: Next | Right Click: Previous | ESC: Exit | F: Toggle
-            Fullscreen
-          </p>
-        </div>
-      )}
-    </>
+    <ToolCard className="max-w-xl">
+      <div className="flex flex-wrap justify-center gap-2">
+        {COLORS.map((c) => (
+          <span
+            key={c.name}
+            title={c.name}
+            className="h-8 w-8 rounded-md border"
+            style={{ backgroundColor: c.value }}
+          />
+        ))}
+      </div>
+      <SwitchField
+        label="Auto-cycle colors"
+        description="Switch to the next color every 2 seconds."
+        checked={auto}
+        onChange={setAuto}
+      />
+      <Button onClick={start} size="lg" className="w-full">
+        <Maximize /> Start Pixel Test
+      </Button>
+      <div className="text-sm text-muted-foreground">
+        <p className="font-medium text-foreground mb-1">Controls</p>
+        <ul className="list-disc pl-5 space-y-1">
+          <li>Left click, Space or → : next color</li>
+          <li>Right click or ← : previous color</li>
+          <li>A: toggle auto-cycle · F: toggle fullscreen · Esc: exit</li>
+        </ul>
+      </div>
+    </ToolCard>
   );
 }
-
-export default Pixel;

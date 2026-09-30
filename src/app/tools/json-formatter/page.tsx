@@ -1,73 +1,38 @@
 import JSONFormatter from "@/components/pages/tools/JSONFormatter";
-import AdBanner from "@/components/AdBanner";
-import BannerAd from "@/components/BannerAd";
+import ToolPage from "@/components/tools/ToolPage";
+import { toolMetadata } from "@/lib/tools";
 
-export const metadata = {
-  title: "JSON Formatter Tool | Format, Validate and Minify JSON Online",
-  description:
-    "Free online JSON formatter to beautify, validate, and minify JSON data. Perfect for developers working with APIs and data.",
-  keywords: [
-    "json formatter",
-    "json validator",
-    "json beautifier",
-    "json minifier",
-    "format json",
-    "validate json",
-    "online json tool",
-  ],
-  openGraph: {
-    title: "JSON Formatter Tool",
-    description: "Free online JSON formatter to beautify and validate JSON data.",
-    type: "website",
-    locale: "en_US",
-  },
-};
+export const metadata = toolMetadata("json-formatter");
 
-export default function JSONFormatterPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen flex flex-col py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-3">
-          JSON Formatter
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Format, validate, and minify JSON data with ease. Perfect for developers
-          working with APIs, configuration files, and data interchange.
-        </p>
-      </div>
-
-      <main>
-        <JSONFormatter />
-      </main>
-
-      <section className="py-8 px-4 mt-6">
-        <AdBanner />
-      </section>
-
-      <section className="mt-8 prose dark:prose-invert max-w-none">
-        <h2 className="text-2xl font-semibold mb-4">About JSON</h2>
-        <p>
-          JSON (JavaScript Object Notation) is a lightweight data-interchange format
-          that's easy for humans to read and write, and easy for machines to parse
-          and generate. It's widely used for APIs, configuration files, and data
-          storage.
-        </p>
-        <h2 className="text-2xl font-semibold mt-6 mb-4">Common Uses</h2>
-        <ul>
-          <li>API request/response formatting</li>
-          <li>Configuration file validation</li>
-          <li>Data export/import</li>
-          <li>Debugging API responses</li>
-        </ul>
-      </section>
-
-      <section className="py-8 px-4 mt-8">
-        <AdBanner />
-      </section>
-
-      <section className="py-8 px-4 flex justify-center">
-        <BannerAd adKey="fd31f3a208951023a4608886cfeb1c42" width={300} height={250} />
-      </section>
-    </main>
+    <ToolPage
+      slug="json-formatter"
+      about={
+        <>
+          <h2>About JSON</h2>
+          <p>
+            JSON (JavaScript Object Notation) is a lightweight data-interchange format that&apos;s
+            easy for humans to read and write, and easy for machines to parse and generate.
+            It&apos;s widely used for APIs, configuration files, and data storage.
+          </p>
+          <h2>Features</h2>
+          <ul>
+            <li>Live validation with the exact line and column of any syntax error</li>
+            <li>Format with 2 spaces, 4 spaces or tabs, or minify to a single line</li>
+            <li>Sort object keys alphabetically to make diffs easier to read</li>
+          </ul>
+          <h2>Common JSON Errors</h2>
+          <ul>
+            <li>Trailing commas after the last item in an object or array</li>
+            <li>Single quotes instead of double quotes around strings and keys</li>
+            <li>Unquoted keys, as in JavaScript object literals</li>
+            <li>Comments, which standard JSON doesn&apos;t allow</li>
+          </ul>
+        </>
+      }
+    >
+      <JSONFormatter />
+    </ToolPage>
   );
 }

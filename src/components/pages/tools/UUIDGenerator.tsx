@@ -1,52 +1,88 @@
 "use client";
-import React from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { useCallback, useEffect, useState } from "react";
+import { Download, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import OutputField from "@/components/tools/OutputField";
+import ToolCard from "@/components/tools/ToolCard";
+import { Field, OptionPicker, SliderField, SwitchField } from "@/components/tools/fields";
+import { bytesToHex } from "@/lib/encoding";
+import { downloadText } from "@/lib/files";
 
-function UUIDGenerator() {
-  const [uuid, setUuid] = React.useState("");
+type Version = "v4" | "v7";
 
-  const generateUUID = () => {
-    const newUuid = crypto.randomUUID();
-    setUuid(newUuid);
-  };
-
-  const copyToClipboard = async () => {
-    if (uuid) {
-      await navigator.clipboard.writeText(uuid);
-      // Could add a toast notification here
-    }
-  };
-
-  React.useEffect(() => {
-    generateUUID();
-  }, []);
-
-  return (
-    <div>
-      <Card>
-        <CardHeader>
-          <h1 className="text-2xl font-bold">UUID Generator</h1>
-          <p>Generate random UUIDs (Universally Unique Identifiers)</p>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col gap-4">
-            <div className="flex gap-4">
-              <Button onClick={generateUUID}>Generate New UUID</Button>
-              <Button onClick={copyToClipboard} disabled={!uuid}>Copy to Clipboard</Button>
-            </div>
-            <Input
-              value={uuid}
-              readOnly
-              className="font-mono text-sm"
-              placeholder="Generated UUID will appear here"
-            />
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
+/** RFC 9562 UUIDv7: 48-bit millisecond timestamp followed by random bits. */
+function uuidv7() {
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
+  const now = Date.now();
+  for (let i = 0; i < 6; i++) bytes[i] = Math.floor(now / 2 ** (8 * (5 - i))) & 0xff;
+  bytes[6] = (bytes[6] & 0x0f) | 0x70;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+  const hex = bytesToHex(bytes);
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
 
-export default UUIDGenerator;
+export default function UUIDGenerator() {
+  const [version, setVersion] = useState<Version>("v4");
+  const [count, setCount] = useState(5);
+  const [uppercase, setUppercase] = useState(false);
+  const [hyphens, setHyphens] = useState(true);
+  const [braces, setBraces] = useState(false);
+  const [uuids, setUuids] = useState<string[]>([]);
+
+  const generate = useCallback(() => {
+    setUuids(
+      Array.from({ length: count }, () => (version === "v4" ? crypto.randomUUID() : uuidv7())),
+    );
+  }, [count, version]);
+
+  useEffect(generate, [generate]);
+
+  const output = uuids
+    .map((id) => {
+      let formatted = hyphens ? id : id.replace(/-/g, "");
+      if (uppercase) formatted = formatted.toUpperCase();
+      return braces ? `{${formatted}}` : formatted;
+    })
+    .join("\n");
+
+  return (
+    <ToolCard className="max-w-3xl">
+      <div className="grid gap-6 sm:grid-cols-2">
+        <Field label="Version">
+          <OptionPicker
+            value={version}
+            onChange={setVersion}
+            options={[
+              { value: "v4", label: "v4 (random)" },
+              { value: "v7", label: "v7 (time-ordered)" },
+            ]}
+          />
+        </Field>
+        <SliderField label="How many" value={count} onChange={setCount} min={1} max={100} />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-3">
+        <SwitchField label="Uppercase" checked={uppercase} onChange={setUppercase} />
+        <SwitchField label="Hyphens" checked={hyphens} onChange={setHyphens} />
+        <SwitchField label="Braces {}" checked={braces} onChange={setBraces} />
+      </div>
+
+      <OutputField
+        multiline
+        mono
+        label={count === 1 ? "Your UUID" : `${count} UUIDs`}
+        value={output}
+        inputClassName="min-h-48"
+      />
+
+      <div className="flex flex-wrap gap-2">
+        <Button onClick={generate}>
+          <RefreshCw /> Generate new
+        </Button>
+        <Button variant="outline" onClick={() => downloadText(output, "uuids.txt")} disabled={!output}>
+          <Download /> Download .txt
+        </Button>
+      </div>
+    </ToolCard>
+  );
+}

@@ -1,71 +1,35 @@
 import UnitConverter from "@/components/pages/tools/UnitConverter";
-import AdBanner from "@/components/AdBanner";
-import BannerAd from "@/components/BannerAd";
+import ToolPage from "@/components/tools/ToolPage";
+import { toolMetadata } from "@/lib/tools";
 
-export const metadata = {
-  title: "Unit Converter Tool | Convert Length, Weight, Temperature Units",
-  description:
-    "Free online unit converter for length, weight, and temperature. Convert between meters, feet, pounds, Celsius, and more.",
-  keywords: [
-    "unit converter",
-    "length converter",
-    "weight converter",
-    "temperature converter",
-    "measurement converter",
-    "online converter",
-  ],
-  openGraph: {
-    title: "Unit Converter Tool",
-    description: "Free online unit converter for various measurements.",
-    type: "website",
-    locale: "en_US",
-  },
-};
+export const metadata = toolMetadata("unit-converter");
 
-export default function UnitConverterPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen flex flex-col py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-3">
-          Unit Converter
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Convert between different units of measurement including length, weight,
-          and temperature. Fast, accurate conversions with no sign-up required.
-        </p>
-      </div>
-
-      <main>
-        <UnitConverter />
-      </main>
-
-      <section className="py-8 px-4 mt-6">
-        <AdBanner />
-      </section>
-
-      <section className="mt-8 prose dark:prose-invert max-w-none">
-        <h2 className="text-2xl font-semibold mb-4">About Unit Conversion</h2>
-        <p>
-          Unit conversion is the process of converting a measurement from one unit
-          to another. This is essential in many fields including science, engineering,
-          cooking, and everyday life.
-        </p>
-        <h2 className="text-2xl font-semibold mt-6 mb-4">Common Conversions</h2>
-        <ul>
-          <li>Length: meters to feet, kilometers to miles</li>
-          <li>Weight: kilograms to pounds, grams to ounces</li>
-          <li>Temperature: Celsius to Fahrenheit</li>
-          <li>Volume: liters to gallons, milliliters to fluid ounces</li>
-        </ul>
-      </section>
-
-      <section className="py-8 px-4 mt-8">
-        <AdBanner />
-      </section>
-
-      <section className="py-8 px-4 flex justify-center">
-        <BannerAd adKey="fd31f3a208951023a4608886cfeb1c42" width={300} height={250} />
-      </section>
-    </main>
+    <ToolPage
+      slug="unit-converter"
+      about={
+        <>
+          <h2>About Unit Conversion</h2>
+          <p>
+            Unit conversion is the process of converting a measurement from one unit to another.
+            This is essential in many fields including science, engineering, cooking, and everyday
+            life. Type in either box and the other updates instantly, with a table of the same
+            value in every other unit.
+          </p>
+          <h2>Common Conversions</h2>
+          <ul>
+            <li>Length: 1 inch = 2.54 cm, 1 mile = 1.609 km</li>
+            <li>Weight: 1 kg = 2.205 lb, 1 lb = 453.6 g</li>
+            <li>Temperature: °F = °C × 9/5 + 32</li>
+            <li>Volume: 1 US gallon = 3.785 liters, 1 cup = 236.6 mL</li>
+            <li>Data: 1 GB = 1,000 MB, while 1 GiB = 1,024 MiB</li>
+            <li>Energy: 1 food Calorie = 1 kcal = 4.184 kJ</li>
+          </ul>
+        </>
+      }
+    >
+      <UnitConverter />
+    </ToolPage>
   );
 }

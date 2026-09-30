@@ -7,6 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Spinner } from "@/components/ui/spinner";
+import { Detail } from "@/components/tools/stats";
 
 type IPInfo = {
   ip: string;
@@ -64,19 +65,6 @@ async function fetchGeo(): Promise<IPInfo | null> {
     console.error("Failed to fetch IP info:", error);
     return null;
   }
-}
-
-function Detail({ label, value }: { label: string; value?: string }) {
-  return (
-    <div className="rounded-lg border border-border/60 bg-muted/30 px-3 py-2">
-      <p className="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
-        {label}
-      </p>
-      <p className="mt-0.5 text-sm font-medium wrap-break-word">
-        {value && value !== "N/A" ? value : "—"}
-      </p>
-    </div>
-  );
 }
 
 function AddressPanel({
@@ -179,7 +167,7 @@ export default function IPInfoCard() {
 
   if (loading) {
     return (
-      <div className="mt-10 flex flex-col items-center">
+      <div className="flex flex-col items-center">
         <Card className="w-full max-w-2xl shadow-xl">
           <CardContent className="grid gap-4 p-6 sm:grid-cols-2">
             <AddressPanel version="IPv4" state={ipv4} onCopy={copyIP} />
@@ -194,7 +182,7 @@ export default function IPInfoCard() {
   const location = [primary?.city, primary?.region].filter(Boolean).join(", ");
 
   return (
-    <div className="mt-10 flex flex-col items-center animate-in fade-in duration-300">
+    <div className="flex flex-col items-center animate-in fade-in duration-300">
       <Card className="w-full max-w-2xl shadow-xl">
         <CardContent className="flex flex-col gap-6 p-6">
           <div className="flex flex-wrap items-center justify-center gap-3 text-center">
