@@ -1,12 +1,6 @@
 "use client";
 import { useState } from "react";
-import {
-  Menu,
-  X,
-  Github,
-  LockKeyhole,
-  PenToolIcon as Tools,
-} from "lucide-react";
+import { Menu, X, LockKeyhole, PenToolIcon as Tools } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "./ui/theme-changer";
 import {
@@ -22,6 +16,7 @@ import { File } from "lucide-react";
 import { Globe } from "lucide-react";
 import { Badge } from "./ui/badge";
 import Logo from "./logo";
+import { GithubIcon } from "@/components/Githubicon";
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -154,15 +149,18 @@ function Navbar() {
           </div>
 
           <div className="ml-auto flex items-center space-x-4">
-            <Button variant="outline" className="hidden md:inline-flex">
+            <Button
+              variant="outline"
+              size="icon"
+              className="hidden md:inline-flex"
+            >
               <a
                 href="https://github.com/Parcoil"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center"
               >
-                <Github className="h-4 w-4 mr-2" />
-                GitHub
+                <GithubIcon className="h-4 w-4 text-foreground" />
               </a>
             </Button>
             <ModeToggle />
@@ -190,7 +188,7 @@ function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t">
             <Button variant="ghost" className="w-full justify-start" asChild>
               <a href="/projects" className="flex items-center">
-                <Github className="h-5 w-5 mr-2" />
+                <GithubIcon className="h-5 w-5 mr-2" />
                 Projects
               </a>
             </Button>
@@ -276,7 +274,7 @@ function Navbar() {
                 href="https://github.com/parcoil"
                 className="flex items-center"
               >
-                <Github className="h-5 w-5 mr-2" />
+                <GithubIcon className="h-5 w-5 mr-2" />
                 GitHub
               </a>
             </Button>

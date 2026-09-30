@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Github, Mail } from "lucide-react";
 import Logo from "./logo";
+import { GithubIcon } from "@/components/Githubicon";
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -45,7 +46,7 @@ function Footer() {
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Github className="w-5 h-5" />
+                <GithubIcon className="w-5 h-5" />
               </a>
               <a
                 href="mailto:info@parcoil.com"
@@ -106,7 +107,7 @@ function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t text-center text-sm text-muted-foreground">
-          &copy; {year} Parcoil
+          Parcoil &copy; {year}
         </div>
       </div>
     </footer>

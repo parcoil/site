@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Github, Twitter } from "lucide-react";
 import AdBanner from "@/components/AdBanner";
+import { GithubIcon } from "@/components/Githubicon";
 
 export const metadata = {
   title: "Contact | Parcoil",
@@ -103,7 +104,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <Github className="h-5 w-5 text-primary" />
+                  <GithubIcon className="h-5 w-5 text-primary" />
                   <div>
                     <p className="font-medium">GitHub</p>
                     <a

@@ -6,6 +6,8 @@ import { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
 import AdBanner from "@/components/AdBanner";
 import Logo from "@/components/logo";
+import ProjectCard from "@/components/ProjectCard";
+import { projects } from "@/lib/projects";
 
 export const metadata: Metadata = {
   title: "Home | Parcoil",
@@ -24,12 +26,12 @@ function Page() {
     <div className="min-h-screen flex flex-col relative overflow-hidden">
       {/* <GridBackground /> */}
 
-      <main className="grow flex flex-col items-center justify-center text-center px-4 pt-20 pb-16 relative">
+      <main className="grow flex flex-col items-center justify-center text-center px-4 pt-20 pb-16 relative border-b">
         <div className="max-w-5xl mx-auto z-10">
           {/* <Sparklecta /> */}
 
           <div className="items-center justify-center flex">
-            <Logo className="w-40 h-40 text-primary" />
+            <Logo className="w-30 h- text-primary" />
           </div>
 
           <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
@@ -64,6 +66,34 @@ function Page() {
           </div>
         </div>
       </main>
+
+      <section className="px-4 pt-20 pb-16 relative border-b">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
+              Projects
+            </h2>
+            <p className="text-muted-foreground max-w-xl mx-auto leading-relaxed">
+              Open-source software and tools maintained by the Parcoil team.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {projects.map((project) => (
+              <ProjectCard key={project.name} project={project} minimal />
+            ))}
+          </div>
+
+          <div className="flex justify-center mt-10">
+            <Link href="/projects" className="w-full sm:w-auto">
+              <Button variant="outline">
+                View All Projects
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       <section className="py-8 px-4">
         <div className="max-w-4xl mx-auto rounded-xl overflow-hidden shadow-xs border bg-background/50">
