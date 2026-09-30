@@ -309,6 +309,6 @@ body {
   @apply rounded-md;
 }
 body::selection {
-  color: var(--accent);
-  background-color: var(--accent-foreground);
+  color: var(--primary-foreground);
+  background-color: var(--primary);
 }
