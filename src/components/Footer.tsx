@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Github, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
 import Logo from "./logo";
 import { GithubIcon } from "@/components/Githubicon";
+import { featuredTools, toolHref } from "@/lib/tools";
 
 function Footer() {
   const year = new Date().getFullYear();
@@ -13,8 +14,7 @@ function Footer() {
       { label: "All Projects", href: "/projects" },
     ],
     tools: [
-      { label: "Password Generator", href: "/tools/password-generator" },
-      { label: "Base64 Encoder", href: "/tools/base64" },
+      ...featuredTools.slice(0, 5).map((tool) => ({ label: tool.name, href: toolHref(tool) })),
       { label: "All Tools", href: "/tools" },
     ],
     info: [

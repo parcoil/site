@@ -1,73 +1,39 @@
 import URLEncoder from "@/components/pages/tools/URLEncoder";
-import AdBanner from "@/components/AdBanner";
-import BannerAd from "@/components/BannerAd";
+import ToolPage from "@/components/tools/ToolPage";
+import { toolMetadata } from "@/lib/tools";
 
-export const metadata = {
-  title: "URL Encoder/Decoder Tool | Encode and Decode URLs Online",
-  description:
-    "Free online tool to encode and decode URLs. Convert special characters to percent-encoded format and back. No ads, no tracking.",
-  keywords: [
-    "url encoder",
-    "url decoder",
-    "encode url",
-    "decode url",
-    "percent encoding",
-    "url encoding",
-    "online url tool",
-  ],
-  openGraph: {
-    title: "URL Encoder/Decoder Tool",
-    description: "Free online tool to encode and decode URLs.",
-    type: "website",
-    locale: "en_US",
-  },
-};
+export const metadata = toolMetadata("url-encoder");
 
-export default function URLEncoderDecoderPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen flex flex-col py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-3">
-          URL Encoder/Decoder
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Encode URLs to make them safe for transmission or decode percent-encoded
-          URLs back to their original form. All processing happens in your browser.
-        </p>
-      </div>
-
-      <main>
-        <URLEncoder />
-      </main>
-
-      <section className="py-8 px-4 mt-6">
-        <AdBanner />
-      </section>
-
-      <section className="mt-8 prose dark:prose-invert max-w-none">
-        <h2 className="text-2xl font-semibold mb-4">About URL Encoding</h2>
-        <p>
-          URL encoding, also known as percent-encoding, is a mechanism for encoding
-          information in a Uniform Resource Identifier (URI). It converts characters
-          that are not allowed in a URL into a format that can be transmitted over
-          the Internet.
-        </p>
-        <h2 className="text-2xl font-semibold mt-6 mb-4">When to Use URL Encoding</h2>
-        <ul>
-          <li>Sending data in query parameters</li>
-          <li>Embedding URLs in HTML or other markup</li>
-          <li>Transmitting special characters in web addresses</li>
-          <li>API calls with complex data</li>
-        </ul>
-      </section>
-
-      <section className="py-8 px-4 mt-8">
-        <AdBanner />
-      </section>
-
-      <section className="py-8 px-4 flex justify-center">
-        <BannerAd adKey="fd31f3a208951023a4608886cfeb1c42" width={300} height={250} />
-      </section>
-    </main>
+    <ToolPage
+      slug="url-encoder"
+      about={
+        <>
+          <h2>About URL Encoding</h2>
+          <p>
+            URL encoding, also known as percent-encoding, is a mechanism for encoding information
+            in a Uniform Resource Identifier (URI). It converts characters that are not allowed in
+            a URL into a format that can be transmitted over the Internet.
+          </p>
+          <h2>Full URL vs. Component Encoding</h2>
+          <p>
+            Encoding a single value (like a search term) escapes every reserved character,
+            including <code>/</code>, <code>?</code> and <code>&amp;</code>. Encoding a full URL
+            leaves those characters alone so the URL keeps working and only escapes things like
+            spaces and non-ASCII characters.
+          </p>
+          <h2>When to Use URL Encoding</h2>
+          <ul>
+            <li>Sending data in query parameters</li>
+            <li>Embedding URLs in HTML or other markup</li>
+            <li>Transmitting special characters in web addresses</li>
+            <li>API calls with complex data</li>
+          </ul>
+        </>
+      }
+    >
+      <URLEncoder />
+    </ToolPage>
   );
 }

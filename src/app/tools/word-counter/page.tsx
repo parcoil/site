@@ -1,72 +1,40 @@
 import WordCounter from "@/components/pages/tools/WordCounter";
-import AdBanner from "@/components/AdBanner";
-import BannerAd from "@/components/BannerAd";
+import ToolPage from "@/components/tools/ToolPage";
+import { toolMetadata } from "@/lib/tools";
 
-export const metadata = {
-  title: "Word Counter Tool | Count Words, Characters, and Lines Online",
-  description:
-    "Free online word counter tool. Count words, characters (with and without spaces), and lines in your text instantly.",
-  keywords: [
-    "word counter",
-    "character counter",
-    "line counter",
-    "text counter",
-    "word count tool",
-    "character count",
-    "online counter",
-  ],
-  openGraph: {
-    title: "Word Counter Tool",
-    description: "Free online word counter to count words, characters, and lines.",
-    type: "website",
-    locale: "en_US",
-  },
-};
+export const metadata = toolMetadata("word-counter");
 
-export default function WordCounterPage() {
+export default function Page() {
   return (
-    <main className="min-h-screen flex flex-col py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-3">
-          Word Counter
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Count words, characters, and lines in your text with real-time updates.
-          Perfect for writers, students, and anyone who needs to track text statistics.
-        </p>
-      </div>
-
-      <main>
-        <WordCounter />
-      </main>
-
-      <section className="py-8 px-4 mt-6">
-        <AdBanner />
-      </section>
-
-      <section className="mt-8 prose dark:prose-invert max-w-none">
-        <h2 className="text-2xl font-semibold mb-4">About Word Counting</h2>
-        <p>
-          Word counting is essential for various purposes including academic writing,
-          content creation, social media posts, and professional documents. Knowing
-          the length of your text helps ensure it meets specific requirements.
-        </p>
-        <h2 className="text-2xl font-semibold mt-6 mb-4">What We Count</h2>
-        <ul>
-          <li><strong>Words:</strong> Separated by spaces or punctuation</li>
-          <li><strong>Characters:</strong> Including spaces and special characters</li>
-          <li><strong>Characters (no spaces):</strong> Excluding spaces</li>
-          <li><strong>Lines:</strong> Separated by line breaks</li>
-        </ul>
-      </section>
-
-      <section className="py-8 px-4 mt-8">
-        <AdBanner />
-      </section>
-
-      <section className="py-8 px-4 flex justify-center">
-        <BannerAd adKey="fd31f3a208951023a4608886cfeb1c42" width={300} height={250} />
-      </section>
-    </main>
+    <ToolPage
+      slug="word-counter"
+      about={
+        <>
+          <h2>About Word Counting</h2>
+          <p>
+            Word counting is essential for various purposes including academic writing, content
+            creation, social media posts, and professional documents. Knowing the length of your
+            text helps ensure it meets specific requirements.
+          </p>
+          <h2>What We Count</h2>
+          <ul>
+            <li><strong>Words:</strong> Using your browser&apos;s language-aware word segmentation</li>
+            <li><strong>Characters:</strong> Including spaces, emoji and special characters</li>
+            <li><strong>Characters (no spaces):</strong> Excluding spaces, tabs and line breaks</li>
+            <li><strong>Sentences and paragraphs:</strong> Paragraphs are separated by a blank line</li>
+            <li><strong>Reading time:</strong> Based on an average of 238 words per minute</li>
+            <li><strong>Speaking time:</strong> Based on an average of 150 words per minute</li>
+          </ul>
+          <h2>Keyword Density</h2>
+          <p>
+            The most frequent meaningful words in your text are listed with how often they appear.
+            Common filler words like &ldquo;the&rdquo; and &ldquo;and&rdquo; are ignored. This is
+            handy for checking that an article isn&apos;t overusing a word.
+          </p>
+        </>
+      }
+    >
+      <WordCounter />
+    </ToolPage>
   );
 }
