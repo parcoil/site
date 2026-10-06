@@ -429,6 +429,16 @@ export const tools: Tool[] = [
     icon: CalendarClock,
     keywords: ["cron parser", "cron expression", "crontab guru", "cron schedule", "cron explainer", "cron next run"],
   },
+  {
+    slug: "bios-password",
+    name: "BIOS Password Recovery",
+    description: "Recover forgotten BIOS/UEFI master passwords from a challenge code",
+    intro: "Recover the master/recovery password for a locked BIOS/UEFI from the challenge code, service tag or serial it shows. Supports ASUS, Dell, Fujitsu-Siemens, HP/Compaq, Insyde, Phoenix, Samsung and Sony. Everything runs in your browser and is never uploaded.",
+    title: "BIOS Password Recovery | Unlock Forgotten BIOS/UEFI Passwords | Parcoil",
+    category: "developer",
+    icon: KeyRound,
+    keywords: ["bios password", "uefi password", "bios password recovery", "bios master password", "bios unlock", "reset bios password", "bios backdoor password", "laptop bios password", "dell bios password", "dell service tag password"],
+  },
 
   // Text
   {

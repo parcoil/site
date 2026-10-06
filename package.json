@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "node --import ./scripts/ts-extensionless-resolver.mjs --test \"src/**/*.test.ts\""
   },
   "dependencies": {
     "@breezystack/lamejs": "^1.2.7",
